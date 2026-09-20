@@ -86,6 +86,9 @@
       <div class="join__form" data-join>
         <h2 class="join__title" id="join-title" data-reveal>Únete a la lista.</h2>
         <form class="form" data-form novalidate data-reveal>
+          <!-- La trampa para robots: una persona no lo ve ni llega a él con el teclado, y un
+               robot lo rellena. Con algo escrito, el servidor dice que sí y no guarda nada. -->
+          <input type="text" name="website" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true">
           <label class="sr-only" for="email">Tu correo</label>
           <div class="form__field">
             <input type="email" name="email" id="email" placeholder="tu@correo.com"

@@ -14,13 +14,31 @@ npm run dev      # http://localhost:4321
 
 Hace falta un servidor (cualquiera): `main.js` es un módulo ES y `file://` los bloquea.
 
+## Dónde vive
+
+**Esta carpeta se sube a Vercel; la aplicación (el Rails) va a Heroku.** Son dos despliegues que
+no comparten nada: esto es HTML, CSS y un módulo de JavaScript, sin build. Lo único que los une
+es que el formulario manda el correo a la aplicación (`ENDPOINT`, más abajo).
+
+En Vercel: importar el repositorio, **Root Directory = `waitlist`**, Framework Preset = *Other*,
+y dejar vacíos el comando de build y el directorio de salida. `vercel.json` pone la caché de
+`assets/` (un día: los ficheros no llevan huella en el nombre, así que un año los dejaría
+pegados) y quita el `.html` de las direcciones. O desde esta carpeta, `npx vercel --prod`.
+
+**El dominio desde el que se sirva tiene que estar en la lista de la aplicación**
+(`WAITLIST_ORIGINS`, en Heroku): por defecto `https://beevo.co` y `https://www.beevo.co`. Si
+no, el correo **se guarda igual** pero el navegador no deja leer la respuesta y la página dice
+"no hemos podido apuntarte". Para las direcciones de prueba de Vercel, que cambian en cada
+despliegue, vale un comodín: `https://beevo-waitlist-*.vercel.app`.
+
+
 ## Lo que se configura
 
 Todo arriba del todo en `main.js`:
 
 | constante | qué hace |
 |---|---|
-| `ENDPOINT` | Vacío: los correos se guardan en el navegador y la confirmación funciona igual. Con una URL, `POST` con `{ email, source }` en JSON (Formspree, Buttondown, un Worker o el Rails). |
+| `ENDPOINT` | A dónde van los correos: `https://app.beevo.co/lista-de-espera/apuntarse`, que es el Rails (`WaitlistSignupsController`); se miran y se exportan en `/admin`. `POST` con `{ email, website }` en JSON — `website` es la trampa para robots, un campo escondido del formulario. **En `localhost` se manda al Rails de desarrollo** (`http://localhost:3010`), para no apuntar correos de prueba en la lista de verdad. El Rails solo deja leer la respuesta a los dominios de su lista (`WAITLIST_ORIGINS`, por defecto `beevo.co` y `www.beevo.co`): si la página se sirve desde otro, hay que añadirlo allí. Vacío: los correos se quedan en el navegador y la confirmación funciona igual. |
 | `LAUNCH_AT` | El día de apertura (`"2026-09-28T00:00:00+02:00"`, medianoche en Madrid): la chapa de arriba es la cuenta atrás, "8d 12h 10m 38s". El ancho de la chapa **se anima** cuando el texto cambia de tamaño (al perder un dígito, o al pasar de la fecha a la cuenta), en vez de saltar. Vacío, se queda con lo que diga el HTML: "28 de septiembre". |
 | `THEMES`, `THEME_EVERY` | Los colores por los que pasa la página y cuánto dura cada uno. |
 

@@ -3,11 +3,15 @@
    Una sola pantalla. Sin dependencias: todo es CSS + rAF.
    ─────────────────────────────────────────────────────────── */
 
-/* Dónde se mandan los correos. Vacío = modo local (se guardan en el
-   navegador y la confirmación funciona igual), que es lo que hace falta
-   para enseñarla sin backend. Con una URL se manda un POST con
-   `{ email, source }` en JSON. */
-const ENDPOINT = "";
+/* Dónde se mandan los correos: a la aplicación (`WaitlistSignupsController`),
+   que los guarda y los enseña en /admin. Un POST con `{ email, website }` en
+   JSON; `website` es la trampa para robots, un campo que una persona no ve.
+   En local se manda al Rails de desarrollo, para no apuntar correos de
+   prueba en la lista de verdad. Vacío = modo local: se guardan en el
+   navegador y la confirmación funciona igual. */
+const ENDPOINT = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? "http://localhost:3010/lista-de-espera/apuntarse"
+  : "https://app.beevo.co/lista-de-espera/apuntarse";
 
 /* Día de apertura: el 28 de septiembre, a medianoche en Madrid. La chapa de
    arriba es la cuenta atrás: "8d 12h 10m 38s". Vacío, se queda con lo que
@@ -326,9 +330,15 @@ form.addEventListener("submit", async (e) => {
       const res = await fetch(ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ email, source: "waitlist" }),
+        body: JSON.stringify({ email, website: form.website.value }),
       });
-      if (!res.ok) throw new Error(res.status);
+      if (!res.ok) {
+        // Lo que el servidor sabe decir —ese correo no vale, demasiados intentos— se dice con
+        // sus palabras; lo demás cae en el "no hemos podido" de abajo.
+        const problem = await res.json().catch(() => null);
+        if (problem?.error) { say(problem.error, true); return; }
+        throw new Error(res.status);
+      }
     } else {
       const list = JSON.parse(localStorage.getItem("beevo:waitlist") || "[]");
       if (!list.includes(email)) list.push(email);
