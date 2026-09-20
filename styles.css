@@ -1,0 +1,475 @@
+/* ───────────────────────────────────────────────────────────
+   Beevo · lista de espera
+   Una sola pantalla. Paleta y tipografías del manual de marca.
+   ─────────────────────────────────────────────────────────── */
+
+@font-face{
+  font-family:"Neulis";
+  src:url("assets/fonts/Neulis-Light.otf") format("opentype");
+  font-weight:300; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Neulis Alt";
+  src:url("assets/fonts/NeulisAlt-Light.otf") format("opentype");
+  font-weight:300; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Fraunces";
+  src:url("assets/fonts/Fraunces.ttf") format("truetype");
+  font-weight:100 900; font-style:normal; font-display:swap;
+}
+
+:root{
+  /* los seis del manual */
+  --mint:#caffd5;
+  --lilac:#d2d0fc;
+  --yellow:#edfc98;
+  --pink:#ecbaf6;
+  --cream:#fbffe2;
+  --ink:#464646;
+
+  --page-bg:var(--mint);
+  --glow:var(--lilac);
+
+  --sans:"Neulis","Quicksand",ui-rounded,system-ui,sans-serif;
+  --alt:"Neulis Alt","Neulis",ui-rounded,system-ui,sans-serif;
+  --serif:"Fraunces",Georgia,serif;
+
+  --gut:clamp(1.25rem,3.4vw,3.5rem);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.65,.05,.36,1);
+  --shift:2.2s;
+}
+
+/* La página va pasando por los cuatro rellenos claros del manual, y cada
+   uno lleva su isotipo y su brillo emparejados como en la página 10. El
+   casi negro y el crema no entran: uno cambiaría la tinta de todo y el
+   otro no se distingue del blanco del campo. */
+body[data-theme="mint"]  {--page-bg:var(--mint);  --glow:var(--lilac)}
+body[data-theme="lilac"] {--page-bg:var(--lilac); --glow:var(--mint)}
+body[data-theme="yellow"]{--page-bg:var(--yellow);--glow:var(--pink)}
+body[data-theme="pink"]  {--page-bg:var(--pink);  --glow:var(--yellow)}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+
+body{
+  font-family:var(--sans); font-weight:300;
+  background:var(--page-bg);
+  color:var(--ink);
+  transition:background-color var(--shift) var(--ease-soft);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+
+img{display:block;max-width:100%}
+::selection{background:var(--ink);color:var(--cream)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ── textura ─────────────────────────────────────────────── */
+.grain{
+  position:fixed; inset:-50%;
+  pointer-events:none; z-index:90;
+  opacity:.5; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E");
+  animation:grain 6s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}      20%{transform:translate(-3%,2%)}
+  40%{transform:translate(2%,-3%)}  60%{transform:translate(-2%,-2%)}
+  80%{transform:translate(3%,1%)}   100%{transform:translate(0,0)}
+}
+
+/* ── cursor ──────────────────────────────────────────────── */
+.cursor{
+  position:fixed; top:0; left:0; z-index:95;
+  width:26px; height:26px; margin:-13px 0 0 -13px;
+  pointer-events:none; opacity:0;
+  transition:opacity .3s ease;
+  will-change:transform;
+}
+.cursor img{width:100%;height:100%;transition:transform .45s var(--ease)}
+.cursor.is-on{opacity:1}
+.cursor.is-link img{transform:scale(2.1) rotate(25deg)}
+.cursor.is-text img{transform:scale(.6)}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ── cortina de entrada ──────────────────────────────────── */
+.curtain{
+  position:fixed; inset:0; z-index:100;
+  background:var(--ink);
+  display:grid; place-items:center;
+  transition:clip-path 1.1s var(--ease),opacity .4s ease .7s;
+  clip-path:inset(0 0 0 0 round 0);
+}
+.curtain__mark{width:clamp(64px,9vw,120px);animation:bob 2.2s var(--ease-soft) infinite}
+body:not([data-loading]) .curtain{
+  clip-path:inset(0 0 100% 0 round 0 0 48px 48px);
+  opacity:0; pointer-events:none;
+}
+@keyframes bob{
+  0%,100%{transform:translateY(-6px) rotate(-6deg) scale(.98)}
+  50%{transform:translateY(6px) rotate(6deg) scale(1.02)}
+}
+
+/* ── la pantalla ─────────────────────────────────────────── */
+/* Tres filas: arriba, la flor y abajo. La flor se queda con lo que sobra
+   y nunca con más, así que no puede montarse encima del texto. */
+.page{
+  height:100svh;
+  display:grid;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  padding:clamp(1rem,2.4vw,1.8rem) var(--gut) clamp(1.3rem,3.4vh,2.6rem);
+}
+
+/* ── arriba ──────────────────────────────────────────────── */
+.top{
+  position:relative; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  opacity:0; transform:translateY(-14px);
+  transition:opacity .9s var(--ease) .6s,transform .9s var(--ease) .6s;
+}
+body:not([data-loading]) .top{opacity:1;transform:none}
+
+/* El manual pide 60 px de ancho como mínimo para el logotipo; aquí va
+   bastante por encima. */
+.brand{height:clamp(30px,3.4vw,40px);width:auto}
+
+.soon{
+  display:inline-flex; align-items:center;
+  gap:.5rem;
+  padding:.55rem .95rem;
+  border-radius:99px;
+  background:color-mix(in srgb,#fff 62%,transparent);
+  font-size:.88rem; white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+}
+/* El hueco del texto: su ancho lo escribe `main.js` y aquí se anima, así que
+   cuando la cuenta pierde un dígito la chapa encoge en vez de saltar. Sin
+   JavaScript no hay ancho escrito y mide lo que su texto, como siempre. */
+.soon__slot{
+  display:inline-block; overflow:hidden; vertical-align:bottom;
+  transition:width .6s var(--ease);
+}
+.soon__slot.is-still{transition:none}
+.soon__text{display:inline-block; white-space:pre}
+/* Todos los dígitos miden lo que el más ancho, el 0: si no, la chapa tiembla. */
+.soon__digit{display:inline-block; width:.62em; text-align:center}
+@media (prefers-reduced-motion:reduce){.soon__slot{transition:none}}
+/* El punto que late, al lado de la cuenta atrás. */
+.soon__pulse{
+  width:7px;height:7px;border-radius:99px;background:currentColor;
+  animation:blip 2s ease-in-out infinite;
+}
+@keyframes blip{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+/* ── la flor ─────────────────────────────────────────────── */
+.stage{
+  position:relative; z-index:1;
+  display:grid; place-items:center;
+  min-height:0;
+  perspective:1100px;
+}
+/* El brillo borroso de detrás: lo que en rikkko es el cuerpo del personaje,
+   aquí es el color emparejado con el fondo. */
+.stage__glow{
+  position:absolute;
+  width:min(96vh,78vw); aspect-ratio:1;
+  border-radius:50%;
+  /* Un degradado no se anima entre dos colores: salta. El color va en
+     background-color, que sí se anima, y la forma la pone la máscara. */
+  background-color:var(--glow);
+  mask-image:radial-gradient(circle,#000 0%,#000 30%,transparent 68%);
+  -webkit-mask-image:radial-gradient(circle,#000 0%,#000 30%,transparent 68%);
+  filter:blur(30px);
+  transition:background-color var(--shift) var(--ease-soft);
+  animation:breathe 7s var(--ease-soft) infinite;
+  pointer-events:none;
+}
+/* El centro blanco que hace que se lea como luz y no como una mancha. */
+.stage__glow::after{
+  content:""; position:absolute; inset:22%;
+  border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,#fff 75%,transparent),transparent 70%);
+}
+@keyframes breathe{0%,100%{scale:.94}50%{scale:1.06}}
+
+.flower{
+  position:relative;
+  height:min(100%,62vw);
+  aspect-ratio:1;
+  transform-style:preserve-3d;
+  will-change:transform;
+  /* entrada: nace desde abajo, pequeña y girada */
+  scale:.4; opacity:0; rotate:-24deg;
+  transition:scale 1.4s var(--ease) .75s,opacity .8s ease .75s,rotate 1.4s var(--ease) .75s;
+}
+body:not([data-loading]) .flower{scale:1;opacity:1;rotate:0deg}
+
+.flower__img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain;
+  opacity:0;
+  transition:opacity var(--shift) var(--ease-soft);
+  filter:drop-shadow(0 30px 50px color-mix(in srgb,var(--ink) 14%,transparent));
+  animation:float 8s var(--ease-soft) infinite;
+}
+@keyframes float{
+  0%,100%{translate:0 -8px}
+  50%{translate:0 8px}
+}
+body[data-theme="mint"]   .flower__img[data-for="mint"],
+body[data-theme="lilac"]  .flower__img[data-for="lilac"],
+body[data-theme="yellow"] .flower__img[data-for="yellow"],
+body[data-theme="pink"]   .flower__img[data-for="pink"]{opacity:1}
+
+/* Al apuntarse, la flor da una vuelta y suelta sus pétalos. */
+.flower.is-happy .flower__img{animation:happy 1.3s var(--ease)}
+@keyframes happy{
+  0%  {rotate:0deg;scale:1}
+  35% {scale:1.12}
+  100%{rotate:360deg;scale:1}
+}
+
+.burst{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.burst img{
+  position:absolute;
+  width:clamp(44px,7vh,86px);
+  opacity:0;
+}
+.burst.is-on img{animation:burst 1.5s var(--ease) forwards}
+.burst img:nth-child(1){--bx:-34vw;--by:-18vh;--br:-40deg;animation-delay:.00s}
+.burst img:nth-child(2){--bx: 30vw;--by:-22vh;--br: 30deg;animation-delay:.05s}
+.burst img:nth-child(3){--bx:-26vw;--by: 16vh;--br: 55deg;animation-delay:.10s}
+.burst img:nth-child(4){--bx: 36vw;--by: 12vh;--br:-25deg;animation-delay:.08s}
+.burst img:nth-child(5){--bx:  4vw;--by:-32vh;--br: 18deg;animation-delay:.14s}
+.burst img:nth-child(6){--bx:-40vw;--by: -2vh;--br:-60deg;animation-delay:.18s}
+.burst img:nth-child(7){--bx: 42vw;--by: -6vh;--br: 70deg;animation-delay:.12s}
+.burst img:nth-child(8){--bx:-10vw;--by: 26vh;--br:-12deg;animation-delay:.20s}
+@keyframes burst{
+  0%  {opacity:0;transform:translate(0,0) scale(.2) rotate(0)}
+  15% {opacity:1}
+  70% {opacity:1}
+  100%{opacity:0;transform:translate(var(--bx),var(--by)) scale(1) rotate(var(--br))}
+}
+
+/* ── abajo ───────────────────────────────────────────────── */
+.bottom{
+  position:relative; z-index:3;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,27rem);
+  align-items:end;
+  gap:clamp(1.5rem,4vw,4rem);
+}
+
+.display{
+  font-family:var(--serif);
+  font-size:clamp(2.1rem,4.4vw,4.7rem);
+  /* Con el espaciado apretado, el espacio de Fraunces se quedaba en nada y
+     "no se maneja" se leía como una sola palabra. */
+  word-spacing:.1em;
+  font-weight:500;
+  font-variation-settings:"opsz" 144,"SOFT" 60,"WONK" 0;
+  line-height:1; letter-spacing:-.03em;
+  margin:clamp(.8rem,1.8vh,1.3rem) 0 clamp(.7rem,1.6vh,1.1rem);
+}
+.line{display:block}
+.w,.nowrap{display:inline-block;white-space:nowrap}
+
+/* La respuesta a la pregunta, con el eje WONK encendido: las mismas letras
+   con un punto de guasa. */
+.line--wink{font-variation-settings:"opsz" 144,"SOFT" 100,"WONK" 1}
+
+/* ── el hueco que va cambiando ───────────────────────────── */
+.swap{
+  position:relative;
+  display:inline-grid;
+  vertical-align:bottom;
+  transition:width .7s var(--ease),opacity .8s ease,filter .8s ease,transform .9s var(--ease);
+  opacity:0; filter:blur(6px); transform:translateY(.4em);
+}
+.swap.is-in{opacity:1;filter:none;transform:none}
+
+.swap__in{
+  grid-area:1/1;
+  justify-self:start;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(.55em);
+  filter:blur(5px);
+  transition:transform .75s var(--ease),opacity .5s ease,filter .5s ease;
+}
+.swap__in.is-on{opacity:1;transform:none;filter:none}
+.swap__in.is-out{opacity:0;transform:translateY(-.55em);filter:blur(5px)}
+
+/* La palabra que cambia va sobre un trazo de marcador del color del brillo,
+   que es el que va rotando con el fondo: la marca cambia con él. */
+.swap--word::before{
+  content:""; position:absolute; z-index:-1;
+  left:-.08em; right:-.08em; bottom:.06em; height:.42em;
+  border-radius:.14em;
+  background:var(--glow);
+  transition:background-color var(--shift) var(--ease-soft);
+}
+.display{isolation:isolate}
+
+.lede{
+  font-family:var(--sans);
+  font-size:clamp(1rem,1.3vw,1.2rem);
+  line-height:1.45; max-width:52ch;
+}
+
+/* ── unirse ──────────────────────────────────────────────── */
+.join{position:relative}
+.join__title{
+  font-family:var(--serif); font-weight:500;
+  font-variation-settings:"opsz" 144,"SOFT" 60;
+  font-size:clamp(1.15rem,1.6vw,1.45rem);
+  margin-bottom:.8rem;
+}
+.join__small{font-family:var(--sans);font-size:.86rem;opacity:.75;margin-top:.7rem}
+.join__done{animation:rise .8s var(--ease) both}
+.join__done .join__title{font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-.02em}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+.form__field{
+  display:flex; align-items:center; gap:.4rem;
+  padding:.4rem .4rem .4rem 1.2rem;
+  background:color-mix(in srgb,#fff 82%,transparent);
+  border-radius:99px;
+  transition:box-shadow .5s var(--ease),transform .5s var(--ease),background-color .4s ease;
+}
+.form__field:focus-within{
+  transform:translateY(-2px);
+  background:#fff;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ink) 65%,transparent);
+}
+.form__field input{
+  flex:1; min-width:0;
+  border:0; background:none; outline:none;
+  font-family:var(--sans); font-weight:300;
+  font-size:1rem; color:var(--ink);
+  padding:.7rem 0;
+}
+.form__field input::placeholder{color:color-mix(in srgb,var(--ink) 45%,transparent)}
+.form.is-error .form__field{
+  box-shadow:0 0 0 3px var(--ink);
+  animation:shake .45s var(--ease-soft);
+}
+@keyframes shake{
+  0%,100%{translate:0}  20%{translate:-8px}
+  40%{translate:7px}    60%{translate:-4px}  80%{translate:3px}
+}
+.form__msg{min-height:0;font-size:.85rem;margin-top:.55rem;opacity:0;transition:opacity .4s ease}
+.form__msg:empty{display:none}
+.form__msg.is-on{opacity:.8}
+
+/* ── botón ───────────────────────────────────────────────── */
+.btn{
+  position:relative; isolation:isolate;
+  display:inline-flex; align-items:center; gap:.55rem;
+  padding:.9rem 1.35rem;
+  border:0; border-radius:99px;
+  background:var(--ink); color:var(--cream);
+  font-family:var(--sans); font-weight:300; font-size:.98rem; line-height:1;
+  cursor:pointer; overflow:hidden; white-space:nowrap;
+  transition:transform .35s var(--ease),color .35s ease;
+  will-change:transform;
+}
+.btn::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:var(--glow);
+  border-radius:inherit;
+  transform:translateY(101%);
+  transition:transform .5s var(--ease),background-color var(--shift) var(--ease-soft);
+}
+.btn:hover{color:var(--ink)}
+.btn:hover::before{transform:none}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.btn__spin{
+  display:none; width:15px; height:15px;
+  border:2px solid color-mix(in srgb,currentColor 30%,transparent);
+  border-top-color:currentColor; border-radius:99px;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form.is-busy .btn__label{opacity:.35}
+.form.is-busy .btn__spin{display:block}
+.form.is-busy .btn{pointer-events:none}
+
+/* ── revelados ───────────────────────────────────────────── */
+[data-reveal]{
+  opacity:0; transform:translateY(20px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+}
+[data-reveal].is-in{opacity:1;transform:none}
+.join [data-reveal]:nth-child(2){transition-delay:.1s}
+.join [data-reveal]:nth-child(3){transition-delay:.2s}
+
+.char{
+  display:inline-block;
+  transform:translateY(.95em) rotate(6deg);
+  opacity:0; filter:blur(6px);
+  transition:transform .95s var(--ease),opacity .7s ease,filter .7s ease;
+}
+.is-in .char{transform:none;opacity:1;filter:none}
+.char--space{width:.28em}
+
+/* ── pantallas estrechas o bajas ─────────────────────────── */
+/* **Sigue siendo una sola pantalla, sin rodar**, también en un teléfono. Se
+   dejaba rodar "porque no cabía", y era al revés: no cabía porque la flor
+   tenía un alto fijo y la letra no miraba el alto de la pantalla. Ahora la
+   página mide lo que la pantalla (`svh`, la más pequeña: con la barra del
+   navegador puesta tampoco rueda), lo de abajo se mide **en alto de
+   pantalla** —la letra, los huecos— y la flor se queda con lo que sobre, que
+   es lo único aquí que puede encoger sin dejar de leerse. */
+@media (max-width:860px){
+  .page{padding-bottom:clamp(.9rem,2.4svh,1.6rem)}
+  .bottom{grid-template-columns:minmax(0,1fr);align-items:end;gap:clamp(.8rem,2.4svh,1.6rem)}
+  .flower{height:min(100%,78vw)}
+  .display{
+    font-size:clamp(1.55rem,min(8.4vw,5.1svh),3rem);
+    margin:0 0 clamp(.5rem,1.4svh,1rem);
+  }
+  .lede{font-size:clamp(.88rem,2.15svh,1.05rem);line-height:1.4}
+  .join__title{font-size:clamp(1rem,2.5svh,1.3rem);margin-bottom:clamp(.4rem,1.2svh,.8rem)}
+  .join__small{font-size:clamp(.72rem,1.8svh,.86rem);margin-top:clamp(.35rem,1svh,.7rem)}
+  .form__field input{padding:clamp(.4rem,1.3svh,.7rem) 0}
+  .btn{padding:clamp(.65rem,1.8svh,.9rem) 1.15rem}
+}
+@media (max-width:560px){
+  .soon{font-size:.8rem;padding:.45rem .8rem}
+  .brand{height:28px}
+  /* El campo y el botón siguen en una fila: partidos en dos eran 60 px de
+     alto, que en un teléfono es lo que mide la flor de más o de menos. */
+  .form__field{padding-left:1rem}
+  .btn{padding-inline:1rem;font-size:.92rem}
+}
+/* Un teléfono tumbado, o una ventana muy baja: se queda el reparto en dos
+   columnas de la pantalla ancha —apilado no cabe en 360 px de alto— y es la
+   letra la que mira el alto. */
+@media (max-height:620px) and (min-width:861px),(max-height:520px) and (min-width:600px){
+  .bottom{grid-template-columns:minmax(0,1fr) minmax(0,24rem);align-items:end;gap:clamp(1rem,3vw,2.5rem)}
+  .display{font-size:clamp(1.4rem,7.4svh,3rem);margin:0 0 clamp(.4rem,1.4svh,1rem)}
+  .lede{font-size:clamp(.82rem,3svh,1.05rem);line-height:1.35}
+  .join__title{font-size:clamp(.95rem,3.6svh,1.3rem);margin-bottom:.5rem}
+  .join__small{font-size:.74rem;margin-top:.4rem}
+  .form__field input{padding:.45rem 0}
+  .btn{padding:.7rem 1.1rem}
+}
+/* Y cuando de verdad no hay alto para todo, sobra antes la nota que el campo. */
+@media (max-height:560px) and (max-width:599px),(max-height:340px){
+  .join__small{display:none}
+}
+
+/* ── menos movimiento ────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .char,[data-reveal]{opacity:1;transform:none;filter:none}
+  .grain{display:none}
+}

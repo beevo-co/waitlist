@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beevo — Tu negocio no se maneja solo… ¿o sí?</title>
+<meta name="description" content="Beevo llega pronto: clientes, proyectos, tareas, calendario y facturas en un solo sitio. Apúntate a la lista y entra antes que nadie.">
+<meta name="theme-color" content="#caffd5">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Beevo — Tu negocio no se maneja solo… ¿o sí?">
+<meta property="og:description" content="Clientes, proyectos, tareas y facturas en un solo sitio. Apúntate a la lista.">
+<meta property="og:image" content="assets/images/ISOTIPO_VERDE.png">
+
+<link rel="icon" href="assets/images/ISOTIPO_VERDE.png">
+<link rel="preload" href="assets/fonts/Neulis-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/images/ISOTIPO_LILA.png" as="image">
+<link rel="preload" href="assets/images/LOGO_NEGRO.png" as="image">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-loading data-theme="mint">
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" aria-hidden="true"><img src="assets/images/ISOTIPO_NEGRO.png" alt=""></div>
+<div class="curtain" aria-hidden="true">
+  <img class="curtain__mark" src="assets/images/ISOTIPO_NEGRO.png" alt="">
+</div>
+
+<div class="page">
+
+  <!-- ░░ arriba ░░ -->
+  <header class="top">
+    <!-- El logotipo ya dice el nombre: no lleva el isotipo al lado. -->
+    <img class="brand" src="assets/images/LOGO_NEGRO.png" alt="Beevo" width="850" height="263">
+
+    <span class="soon">
+      <span class="soon__pulse" aria-hidden="true"></span>
+      <span class="soon__slot" data-soon><span class="soon__text" data-soon-text>28 de septiembre</span></span>
+    </span>
+  </header>
+
+  <!-- ░░ la flor ░░ -->
+  <!-- Cada fondo lleva su isotipo, como en la página 10 del manual. -->
+  <div class="stage" aria-hidden="true">
+    <div class="stage__glow"></div>
+    <div class="flower" data-flower>
+      <img class="flower__img" data-for="mint"   src="assets/images/ISOTIPO_LILA.png" alt="">
+      <img class="flower__img" data-for="lilac"  src="assets/images/ISOTIPO_VERDE.png" alt="">
+      <img class="flower__img" data-for="yellow" src="assets/images/ISOTIPO_ROSA.png" alt="">
+      <img class="flower__img" data-for="pink"   src="assets/images/ISOTIPO_AMARILLO.png" alt="">
+    </div>
+
+    <div class="burst" data-burst>
+      <img src="assets/images/ISOTIPO_VERDE.png" alt="">
+      <img src="assets/images/ISOTIPO_LILA.png" alt="">
+      <img src="assets/images/ISOTIPO_ROSA.png" alt="">
+      <img src="assets/images/ISOTIPO_AMARILLO.png" alt="">
+      <img src="assets/images/ISOTIPO_CREMA.png" alt="">
+      <img src="assets/images/ISOTIPO_VERDE.png" alt="">
+      <img src="assets/images/ISOTIPO_ROSA.png" alt="">
+      <img src="assets/images/ISOTIPO_LILA.png" alt="">
+    </div>
+  </div>
+
+  <!-- ░░ abajo ░░ -->
+  <main class="bottom">
+    <section class="pitch">
+      <!-- La palabra de "Tu ___" va cambiando por quien usa Beevo, y el final
+           de "solo" concuerda con ella: la agencia no se maneja "sola". -->
+      <h1 class="display" aria-label="Tu negocio no se maneja solo… ¿o sí?">
+        <span class="line" aria-hidden="true"><span data-split>Tu</span>
+          <span class="swap swap--word" data-swap>negocio</span></span>
+        <span class="line" aria-hidden="true"><span data-split>no se maneja</span>
+          <span class="nowrap"><span data-split>sol</span><span class="swap swap--end" data-swap-end>o</span><span data-split>…</span></span></span>
+        <span class="line line--wink" aria-hidden="true"><span data-split>¿o&nbsp;sí?</span></span>
+      </h1>
+      <p class="lede" data-reveal>
+        Beevo es el espacio donde organizas todo lo que mueve tu trabajo
+        creativo y profesional.
+      </p>
+    </section>
+
+    <section class="join" aria-labelledby="join-title">
+      <div class="join__form" data-join>
+        <h2 class="join__title" id="join-title" data-reveal>Únete a la lista.</h2>
+        <form class="form" data-form novalidate data-reveal>
+          <label class="sr-only" for="email">Tu correo</label>
+          <div class="form__field">
+            <input type="email" name="email" id="email" placeholder="tu@correo.com"
+                   autocomplete="email" required data-cursor="text">
+            <button class="btn" type="submit" data-magnetic data-cursor="link">
+              <span class="btn__label">Apuntarme</span>
+              <span class="btn__spin" aria-hidden="true"></span>
+            </button>
+          </div>
+          <p class="form__msg" data-msg role="status" aria-live="polite"></p>
+        </form>
+        <p class="join__small" data-reveal>Solo te escribiremos para avisarte cuando Beevo abra.</p>
+      </div>
+
+      <div class="join__done" data-done hidden>
+        <h2 class="join__title">Ya estás dentro.</h2>
+        <p class="join__small">Te avisamos en <strong data-done-mail></strong>.</p>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+<script src="main.js" type="module"></script>
+</body>
+</html>
