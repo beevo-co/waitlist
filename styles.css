@@ -329,6 +329,8 @@ body[data-theme="pink"]   .flower__img[data-for="pink"]{opacity:1}
   margin-bottom:.8rem;
 }
 .join__small{font-family:var(--sans);font-size:.86rem;opacity:.75;margin-top:.7rem}
+.join__legal{margin-top:.35rem}
+.join__legal a{color:inherit;text-underline-offset:.2em}
 .join__done{animation:rise .8s var(--ease) both}
 .join__done .join__title{font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:-.02em}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
