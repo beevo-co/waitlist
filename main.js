@@ -13,10 +13,10 @@ const ENDPOINT = ["localhost", "127.0.0.1"].includes(location.hostname)
   ? "http://localhost:3010/lista-de-espera/apuntarse"
   : "https://app.beevo.co/lista-de-espera/apuntarse";
 
-/* Día de apertura: el 28 de septiembre, a medianoche en Madrid. La chapa de
+/* Día de apertura: el lunes 5 de octubre, a medianoche en Madrid. La chapa de
    arriba es la cuenta atrás: "8d 12h 10m 38s". Vacío, se queda con lo que
    diga el HTML. */
-const LAUNCH_AT = "2026-09-28T00:00:00+02:00";
+const LAUNCH_AT = "2026-10-05T00:00:00+02:00";
 
 /* Quién usa Beevo, en el hueco de "Tu ___ no se maneja solo…". La letra
    es el final de "solo": una agencia no se maneja "sola". Solo en

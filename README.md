@@ -39,7 +39,7 @@ Todo arriba del todo en `main.js`:
 | constante | qué hace |
 |---|---|
 | `ENDPOINT` | A dónde van los correos: `https://app.beevo.co/lista-de-espera/apuntarse`, que es el Rails (`WaitlistSignupsController`); se miran y se exportan en `/admin`. `POST` con `{ email, website }` en JSON — `website` es la trampa para robots, un campo escondido del formulario. **En `localhost` se manda al Rails de desarrollo** (`http://localhost:3010`), para no apuntar correos de prueba en la lista de verdad. El Rails solo deja leer la respuesta a los dominios de su lista (`WAITLIST_ORIGINS`, por defecto `beevo.co` y `www.beevo.co`): si la página se sirve desde otro, hay que añadirlo allí. Vacío: los correos se quedan en el navegador y la confirmación funciona igual. |
-| `LAUNCH_AT` | El día de apertura (`"2026-09-28T00:00:00+02:00"`, medianoche en Madrid): la chapa de arriba es la cuenta atrás, "8d 12h 10m 38s". El ancho de la chapa **se anima** cuando el texto cambia de tamaño (al perder un dígito, o al pasar de la fecha a la cuenta), en vez de saltar. Vacío, se queda con lo que diga el HTML: "28 de septiembre". |
+| `LAUNCH_AT` | El día de apertura (`"2026-10-05T00:00:00+02:00"`, medianoche en Madrid): la chapa de arriba es la cuenta atrás, "8d 12h 10m 38s". El ancho de la chapa **se anima** cuando el texto cambia de tamaño (al perder un dígito, o al pasar de la fecha a la cuenta), en vez de saltar. Vacío, se queda con lo que diga el HTML: "5 de octubre". |
 | `THEMES`, `THEME_EVERY` | Los colores por los que pasa la página y cuánto dura cada uno. |
 
 ## La frase
