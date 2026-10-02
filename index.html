@@ -17,6 +17,9 @@
 <link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assets/images/ISOTIPO_LILA.png" as="image">
 <link rel="preload" href="assets/images/LOGO_NEGRO.png" as="image">
+<link rel="alternate" hreflang="es" href="https://beevo.co/?lang=es">
+<link rel="alternate" hreflang="en" href="https://beevo.co/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://beevo.co/">
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -35,10 +38,18 @@
     <!-- El logotipo ya dice el nombre: no lleva el isotipo al lado. -->
     <img class="brand" src="assets/images/LOGO_NEGRO.png" alt="Beevo" width="850" height="263">
 
-    <span class="soon">
-      <span class="soon__pulse" aria-hidden="true"></span>
-      <span class="soon__slot" data-soon><span class="soon__text" data-soon-text>5 de octubre</span></span>
-    </span>
+    <div class="top__side">
+      <span class="soon">
+        <span class="soon__pulse" aria-hidden="true"></span>
+        <span class="soon__slot" data-soon><span class="soon__text" data-soon-text data-i18n="soon">5 de octubre</span></span>
+      </span>
+
+      <!-- El idioma: lo elige solo (`main.js`) y aquí se cambia sin recargar. -->
+      <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.label">
+        <button class="lang__opt" type="button" lang="es" data-lang="es" aria-pressed="true" data-cursor="link">ES</button>
+        <button class="lang__opt" type="button" lang="en" data-lang="en" aria-pressed="false" data-cursor="link">EN</button>
+      </div>
+    </div>
   </header>
 
   <!-- ░░ la flor ░░ -->
@@ -69,49 +80,50 @@
     <section class="pitch">
       <!-- La palabra de "Tu ___" va cambiando por quien usa Beevo, y el final
            de "solo" concuerda con ella: la agencia no se maneja "sola". -->
-      <h1 class="display" aria-label="Tu negocio no se maneja solo… ¿o sí?">
-        <span class="line" aria-hidden="true"><span data-split>Tu</span>
+      <h1 class="display" aria-label="Tu negocio no se maneja solo… ¿o sí?" data-i18n-attr="aria-label:title.label">
+        <span class="line" aria-hidden="true"><span data-split data-i18n="title.your">Tu</span>
           <span class="swap swap--word" data-swap>negocio</span></span>
-        <span class="line" aria-hidden="true"><span data-split>no se maneja</span>
-          <span class="nowrap"><span data-split>sol</span><span class="swap swap--end" data-swap-end>o</span><span data-split>…</span></span></span>
-        <span class="line line--wink" aria-hidden="true"><span data-split>¿o&nbsp;sí?</span></span>
+        <span class="line" aria-hidden="true"><span data-split data-i18n="title.runs">no se maneja</span>
+          <span class="nowrap"><span data-split data-i18n="title.alone">sol</span><span class="swap swap--end" data-swap-end>o</span><span data-split>…</span></span></span>
+        <span class="line line--wink" aria-hidden="true"><span data-split data-i18n="title.wink">¿o&nbsp;sí?</span></span>
       </h1>
-      <p class="lede" data-reveal>
-Beevo es el espacio donde organizas todo lo que mueve tu trabajo
+      <p class="lede" data-reveal data-i18n="lede">
+        Beevo es el espacio donde organizas todo lo que mueve tu trabajo
         creativo y profesional: tus clientes, proyectos, tareas, calendario y facturas.
       </p>
     </section>
 
     <section class="join" aria-labelledby="join-title">
       <div class="join__form" data-join>
-        <h2 class="join__title" id="join-title" data-reveal>Únete a la lista.</h2>
+        <h2 class="join__title" id="join-title" data-reveal data-i18n="join.title">Únete a la lista.</h2>
         <form class="form" data-form novalidate data-reveal>
           <!-- La trampa para robots: una persona no lo ve ni llega a él con el teclado, y un
                robot lo rellena. Con algo escrito, el servidor dice que sí y no guarda nada. -->
           <input type="text" name="website" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <label class="sr-only" for="email">Tu correo</label>
+          <label class="sr-only" for="email" data-i18n="join.label">Tu correo</label>
           <div class="form__field">
             <input type="email" name="email" id="email" placeholder="tu@correo.com"
-                   autocomplete="email" required data-cursor="text">
+                   autocomplete="email" required data-cursor="text"
+                   data-i18n-attr="placeholder:join.placeholder">
             <button class="btn" type="submit" data-magnetic data-cursor="link">
-              <span class="btn__label">Apuntarme</span>
+              <span class="btn__label" data-i18n="join.button">Apuntarme</span>
               <span class="btn__spin" aria-hidden="true"></span>
             </button>
           </div>
           <p class="form__msg" data-msg role="status" aria-live="polite"></p>
         </form>
-        <p class="join__small" data-reveal>Solo te escribiremos para avisarte cuando Beevo abra.</p>
+        <p class="join__small" data-reveal data-i18n="join.small">Solo te escribiremos para avisarte cuando Beevo abra.</p>
         <!-- Google pide que la página principal enlace la política de privacidad para verificar
              el acceso a Google Calendar; y quien deja su correo tiene derecho a leerla. -->
         <p class="join__small join__legal" data-reveal>
-          <a href="/privacidad">Política de privacidad</a> ·
-          <a href="https://app.beevo.co/legal/condiciones.pdf">Condiciones</a>
+          <a href="/privacidad" data-i18n="legal.privacy" data-i18n-attr="href:legal.privacyHref">Política de privacidad</a> ·
+          <a href="https://app.beevo.co/legal/condiciones.pdf" data-i18n="legal.terms">Condiciones</a>
         </p>
       </div>
 
       <div class="join__done" data-done hidden>
-        <h2 class="join__title">Ya estás dentro.</h2>
-        <p class="join__small">Te avisamos en <strong data-done-mail></strong>.</p>
+        <h2 class="join__title" data-i18n="done.title">Ya estás dentro.</h2>
+        <p class="join__small"><span data-i18n="done.body">Te avisamos en</span> <strong data-done-mail></strong>.</p>
       </div>
     </section>
   </main>

@@ -163,6 +163,30 @@ body:not([data-loading]) .top{opacity:1;transform:none}
 }
 @keyframes blip{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
 
+/* La cuenta atrás y el idioma, juntos a la derecha. */
+.top__side{display:flex;align-items:center;gap:.45rem}
+
+/* ES / EN: la misma chapa que la cuenta atrás, y el idioma puesto se
+   invierte a tinta, como el botón. Sin bordes: relleno y hueco. */
+.lang{
+  display:inline-flex; gap:.15rem;
+  padding:.22rem;
+  border-radius:99px;
+  background:color-mix(in srgb,#fff 62%,transparent);
+}
+.lang__opt{
+  border:0; border-radius:99px;
+  padding:.38rem .6rem;
+  background:none; color:var(--ink);
+  font-family:var(--sans); font-weight:300; font-size:.78rem; line-height:1;
+  letter-spacing:.04em;
+  cursor:pointer;
+  transition:background-color .35s var(--ease),color .35s ease;
+}
+.lang__opt:hover{background:color-mix(in srgb,#fff 70%,transparent)}
+.lang__opt[aria-pressed="true"]{background:var(--ink);color:var(--cream);cursor:default}
+.lang__opt:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
 /* ── la flor ─────────────────────────────────────────────── */
 .stage{
   position:relative; z-index:1;
@@ -443,10 +467,21 @@ body[data-theme="pink"]   .flower__img[data-for="pink"]{opacity:1}
 @media (max-width:560px){
   .soon{font-size:.8rem;padding:.45rem .8rem}
   .brand{height:28px}
+  .lang__opt{padding:.34rem .5rem;font-size:.72rem}
   /* El campo y el botón siguen en una fila: partidos en dos eran 60 px de
      alto, que en un teléfono es lo que mide la flor de más o de menos. */
   .form__field{padding-left:1rem}
   .btn{padding-inline:1rem;font-size:.92rem}
+}
+/* En los teléfonos más estrechos el logotipo, la cuenta y el idioma no caben
+   de sobra en una fila: se aprietan un poco y el punto que late se va. */
+@media (max-width:380px){
+  .top{gap:.5rem}
+  .brand{height:24px}
+  .top__side{gap:.3rem}
+  .soon{padding:.42rem .65rem}
+  .soon__pulse{display:none}
+  .lang__opt{padding:.32rem .42rem}
 }
 /* Un teléfono tumbado, o una ventana muy baja: se queda el reparto en dos
    columnas de la pantalla ancha —apilado no cabe en 360 px de alto— y es la

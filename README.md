@@ -38,9 +38,29 @@ Todo arriba del todo en `main.js`:
 
 | constante | qué hace |
 |---|---|
-| `ENDPOINT` | A dónde van los correos: `https://app.beevo.co/lista-de-espera/apuntarse`, que es el Rails (`WaitlistSignupsController`); se miran y se exportan en `/admin`. `POST` con `{ email, website }` en JSON — `website` es la trampa para robots, un campo escondido del formulario. **En `localhost` se manda al Rails de desarrollo** (`http://localhost:3010`), para no apuntar correos de prueba en la lista de verdad. El Rails solo deja leer la respuesta a los dominios de su lista (`WAITLIST_ORIGINS`, por defecto `beevo.co` y `www.beevo.co`): si la página se sirve desde otro, hay que añadirlo allí. Vacío: los correos se quedan en el navegador y la confirmación funciona igual. |
+| `ENDPOINT` | A dónde van los correos: `https://app.beevo.co/lista-de-espera/apuntarse`, que es el Rails (`WaitlistSignupsController`); se miran y se exportan en `/admin`. `POST` con `{ email, website, locale }` en JSON — `website` es la trampa para robots, un campo escondido del formulario. **En `localhost` se manda al Rails de desarrollo** (`http://localhost:3010`), para no apuntar correos de prueba en la lista de verdad. El Rails solo deja leer la respuesta a los dominios de su lista (`WAITLIST_ORIGINS`, por defecto `beevo.co` y `www.beevo.co`): si la página se sirve desde otro, hay que añadirlo allí. Vacío: los correos se quedan en el navegador y la confirmación funciona igual. |
 | `LAUNCH_AT` | El día de apertura (`"2026-10-05T00:00:00-05:00"`, medianoche en Colombia): la chapa de arriba es la cuenta atrás, "8d 12h 10m 38s". El ancho de la chapa **se anima** cuando el texto cambia de tamaño (al perder un dígito, o al pasar de la fecha a la cuenta), en vez de saltar. Vacío, se queda con lo que diga el HTML: "5 de octubre". |
 | `THEMES`, `THEME_EVERY` | Los colores por los que pasa la página y cuánto dura cada uno. |
+
+## Idioma
+
+**En español y en inglés**, en la misma dirección. El idioma lo elige solo, en este orden:
+`?lang=es` o `?lang=en` en la dirección; si no, el que se eligió aquí otra vez (`localStorage`,
+`beevo:lang`); y si no, el del navegador —el primero de sus idiomas que sea español o inglés—.
+Todo lo demás es español.
+
+Arriba a la derecha, al lado de la cuenta atrás, va **ES / EN**: cambia los textos en su sitio,
+sin recargar (también `<html lang>`, el título y la descripción) y se recuerda. Todos los textos
+viven en `TEXT`, arriba de `main.js`, cada uno con su clave; en el HTML lleva el español, que es
+lo que se lee sin JavaScript, y la clave en `data-i18n` (o `data-i18n-attr="placeholder:clave"`
+para un atributo). Un texto nuevo necesita su clave en los dos idiomas. El formulario manda
+también `locale` (`es` o `en`); el Rails puede ignorarlo.
+
+En inglés la frase es "Your business doesn’t run itself… or does it?" y la palabra rota igual
+(`who`), pero "itself" no concuerda con nada: su final es siempre la f.
+
+**La privacidad tiene dos páginas**: `privacidad.html` y su traducción, `privacy.html`, enlazadas
+entre sí; el pie enlaza la del idioma puesto. Si cambia una, cambia la otra (la española manda).
 
 ## La frase
 

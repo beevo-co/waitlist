@@ -3,12 +3,14 @@
   Copia web de la política de privacidad. La fuente es docs/legal/privacidad.html en el repositorio
   de la aplicación (de ahí sale también el PDF de app.beevo.co/legal): se cambia allí y se copia aquí.
   Google la pide como página y no como PDF para verificar el acceso a Google Calendar.
+  Su traducción al inglés es privacy.html: si cambia una, cambia la otra.
 -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Política de privacidad · Beevo</title>
+<link rel="alternate" hreflang="en" href="/privacy">
 <style>
   @font-face { font-family: "Neulis"; src: url("assets/fonts/Neulis-Light.otf"); font-weight: 300; }
   @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces.ttf"); font-weight: 100 900; }
@@ -25,10 +27,16 @@
   p { margin: 0 0 6pt; }
   strong { font-weight: 700; }
   a { color: #2f7d4f; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .other { font-family: "Neulis", sans-serif; font-size: 9.5pt; }
+  @media print { .other { display: none; } }
 </style>
 </head>
 <body>
-<div class="brand">Beevo</div>
+<div class="top">
+  <div class="brand">Beevo</div>
+  <a class="other" href="/privacy" lang="en" hreflang="en">Read in English</a>
+</div>
 <h1>Política de privacidad</h1>
 <p class="date">Última actualización: 26 de septiembre de 2026</p>
 
