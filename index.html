@@ -2,134 +2,411 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Beevo — Tu negocio no se maneja solo… ¿o sí?</title>
-<meta name="description" content="Beevo llega pronto: clientes, proyectos, tareas, calendario y facturas en un solo sitio. Apúntate a la lista y entra antes que nadie.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beevo — El CRM para freelancers que odian los CRM</title>
+<meta name="description" content="Beevo es el CRM para freelancers y agencias: clientes, proyectos, tareas, calendario y cuentas de cobro en un solo lugar, con un project manager con IA que automatiza la gestión para que tú te enfoques en crear. Pruébalo 7 días gratis.">
 <meta name="theme-color" content="#caffd5">
-
 <meta property="og:type" content="website">
-<meta property="og:title" content="Beevo — Tu negocio no se maneja solo… ¿o sí?">
-<meta property="og:description" content="Clientes, proyectos, tareas y facturas en un solo sitio. Apúntate a la lista.">
+<meta property="og:title" content="Beevo — El CRM para freelancers que odian los CRM">
+<meta property="og:description" content="Clientes, proyectos, tareas y cuentas de cobro en un solo lugar, y Beevo AI encargándose de la gestión. 7 días gratis.">
 <meta property="og:image" content="assets/images/ISOTIPO_VERDE.png">
-
 <link rel="icon" href="assets/images/ISOTIPO_VERDE.png">
-<link rel="preload" href="assets/fonts/Neulis-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assets/images/ISOTIPO_LILA.png" as="image">
-<link rel="preload" href="assets/images/LOGO_NEGRO.png" as="image">
 <link rel="alternate" hreflang="es" href="https://beevo.co/?lang=es">
 <link rel="alternate" hreflang="en" href="https://beevo.co/?lang=en">
 <link rel="alternate" hreflang="x-default" href="https://beevo.co/">
+<link rel="preload" href="assets/fonts/Neulis-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/Fraunces.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/vendor/lenis.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body data-loading data-theme="mint">
+<body class="is-loading" data-theme="mint">
 
+<!-- Lo de la lista de espera: el grano por encima de todo, el isotipo que sigue al puntero y la
+     cortina que se levanta al entrar. -->
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><img src="assets/images/ISOTIPO_NEGRO.png" alt=""></div>
-<div class="curtain" aria-hidden="true">
-  <img class="curtain__mark" src="assets/images/ISOTIPO_NEGRO.png" alt="">
-</div>
+<div class="curtain" aria-hidden="true"><img class="curtain__mark" src="assets/images/ISOTIPO_CREMA.png" alt=""></div>
 
-<div class="page">
+<!-- Iconos (Lucide, ISC) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-tasks" viewBox="0 0 24 24"><path d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"/><path d="m9 11 3 3L22 4"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></symbol>
+    <symbol id="i-shapes" viewBox="0 0 24 24"><path d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"/><rect x="3" y="14" width="7" height="7" rx="1"/><circle cx="17.5" cy="17.5" r="3.5"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></symbol>
+    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M14 8H8"/><path d="M16 12H8"/><path d="M13 16H8"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+    <symbol id="i-languages" viewBox="0 0 24 24"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="10"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></symbol>
+  </defs>
+</svg>
 
-  <!-- ░░ arriba ░░ -->
-  <header class="top">
-    <!-- El logotipo ya dice el nombre: no lleva el isotipo al lado. -->
-    <img class="brand" src="assets/images/LOGO_NEGRO.png" alt="Beevo" width="850" height="263">
+<!-- La flecha de los botones: un chevrón que gana su palo al pasar por encima. -->
+<template id="arw"><svg class="arw" viewBox="0 0 10 10" aria-hidden="true"><path class="arw__line" d="M0 5h7"/><path class="arw__tip" d="M1 1l4 4-4 4"/></svg></template>
 
-    <div class="top__side">
-      <span class="soon">
-        <span class="soon__pulse" aria-hidden="true"></span>
-        <span class="soon__slot" data-soon><span class="soon__text" data-soon-text data-i18n="soon">5 de octubre</span></span>
-      </span>
+<a class="skip" href="#producto" data-i18n="skip">Saltar al contenido</a>
 
-      <!-- El idioma: lo elige solo (`main.js`) y aquí se cambia sin recargar. -->
-      <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:lang.label">
-        <button class="lang__opt" type="button" lang="es" data-lang="es" aria-pressed="true" data-cursor="link">ES</button>
-        <button class="lang__opt" type="button" lang="en" data-lang="en" aria-pressed="false" data-cursor="link">EN</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ░░ la flor ░░ -->
-  <!-- Cada fondo lleva su isotipo, como en la página 10 del manual. -->
-  <div class="stage" aria-hidden="true">
-    <div class="stage__glow"></div>
-    <div class="flower" data-flower>
-      <img class="flower__img" data-for="mint"   src="assets/images/ISOTIPO_LILA.png" alt="">
-      <img class="flower__img" data-for="lilac"  src="assets/images/ISOTIPO_VERDE.png" alt="">
-      <img class="flower__img" data-for="yellow" src="assets/images/ISOTIPO_ROSA.png" alt="">
-      <img class="flower__img" data-for="pink"   src="assets/images/ISOTIPO_AMARILLO.png" alt="">
-    </div>
-
-    <div class="burst" data-burst>
-      <img src="assets/images/ISOTIPO_VERDE.png" alt="">
-      <img src="assets/images/ISOTIPO_LILA.png" alt="">
-      <img src="assets/images/ISOTIPO_ROSA.png" alt="">
-      <img src="assets/images/ISOTIPO_AMARILLO.png" alt="">
-      <img src="assets/images/ISOTIPO_CREMA.png" alt="">
-      <img src="assets/images/ISOTIPO_VERDE.png" alt="">
-      <img src="assets/images/ISOTIPO_ROSA.png" alt="">
-      <img src="assets/images/ISOTIPO_LILA.png" alt="">
+<!-- ░░ BARRA ░░
+     El logotipo y los botones de entrar, sin fondo: se va al bajar y vuelve al subir. La navegación
+     vive en el notch: se pulsa y se despliega. -->
+<header class="nav" data-nav>
+  <div class="nav__in">
+    <a class="nav__brand" href="#top" aria-label="Beevo"><img src="assets/images/LOGO_NEGRO.png" alt="Beevo" width="850" height="263"></a>
+    <div class="nav__side">
+      <a class="btn btn--line btn--sm nav__in-btn" href="https://app.beevo.co/acceder"><span data-i18n="nav.signin">Entrar</span><i data-arw></i></a>
+      <a class="btn btn--ink btn--sm nav__cta" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span class="nav__cta-long" data-i18n="nav.cta">Empieza gratis</span><span class="nav__cta-short" data-i18n="nav.cta.short">Empezar</span><i data-arw></i></a>
     </div>
   </div>
+</header>
 
-  <!-- ░░ abajo ░░ -->
-  <main class="bottom">
-    <section class="pitch">
-      <!-- La palabra de "Tu ___" va cambiando por quien usa Beevo, y el final
-           de "solo" concuerda con ella: la agencia no se maneja "sola". -->
-      <h1 class="display" aria-label="Tu negocio no se maneja solo… ¿o sí?" data-i18n-attr="aria-label:title.label">
-        <span class="line" aria-hidden="true"><span data-split data-i18n="title.your">Tu</span>
-          <span class="swap swap--word" data-swap>negocio</span></span>
-        <span class="line" aria-hidden="true"><span data-split data-i18n="title.runs">no se maneja</span>
-          <span class="nowrap"><span data-split data-i18n="title.alone">sol</span><span class="swap swap--end" data-swap-end>o</span><span data-split>…</span></span></span>
-        <span class="line line--wink" aria-hidden="true"><span data-split data-i18n="title.wink">¿o&nbsp;sí?</span></span>
-      </h1>
-      <p class="lede" data-reveal data-i18n="lede">
-        Beevo es el espacio donde organizas todo lo que mueve tu trabajo
-        creativo y profesional: tus clientes, proyectos, tareas, calendario y facturas.
-      </p>
-    </section>
-
-    <section class="join" aria-labelledby="join-title">
-      <div class="join__form" data-join>
-        <h2 class="join__title" id="join-title" data-reveal data-i18n="join.title">Únete a la lista.</h2>
-        <form class="form" data-form novalidate data-reveal>
-          <!-- La trampa para robots: una persona no lo ve ni llega a él con el teclado, y un
-               robot lo rellena. Con algo escrito, el servidor dice que sí y no guarda nada. -->
-          <input type="text" name="website" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <label class="sr-only" for="email" data-i18n="join.label">Tu correo</label>
-          <div class="form__field">
-            <input type="email" name="email" id="email" placeholder="tu@correo.com"
-                   autocomplete="email" required data-cursor="text"
-                   data-i18n-attr="placeholder:join.placeholder">
-            <button class="btn" type="submit" data-magnetic data-cursor="link">
-              <span class="btn__label" data-i18n="join.button">Apuntarme</span>
-              <span class="btn__spin" aria-hidden="true"></span>
-            </button>
-          </div>
-          <p class="form__msg" data-msg role="status" aria-live="polite"></p>
-        </form>
-        <p class="join__small" data-reveal data-i18n="join.small">Solo te escribiremos para avisarte cuando Beevo abra.</p>
-        <!-- Google pide que la página principal enlace la política de privacidad para verificar
-             el acceso a Google Calendar; y quien deja su correo tiene derecho a leerla. -->
-        <p class="join__small join__legal" data-reveal>
-          <a href="/privacidad" data-i18n="legal.privacy" data-i18n-attr="href:legal.privacyHref">Política de privacidad</a> ·
-          <a href="https://app.beevo.co/legal/condiciones.pdf" data-i18n="legal.terms">Condiciones</a>
-        </p>
+<!-- ░░ EL NOTCH DE LA PÁGINA ░░
+     Beevo vive aquí, pegado al canto de arriba, como en el producto, y es el menú: siempre a la
+     vista, y al pulsarlo se despliega con las secciones y los dos botones. -->
+<div class="notch notch--page" data-page-notch aria-live="polite">
+  <span class="notch__glow" aria-hidden="true"></span>
+  <span class="notch__ring" aria-hidden="true"></span>
+  <div class="notch__body" data-notch-body>
+    <button class="notch__pill" type="button" data-notch-toggle aria-expanded="false" aria-controls="notch-menu">
+      <span class="blob blob--notch" data-blob data-beevo data-persona></span>
+      <span class="notch__name"><span data-persona-name>Beevo</span></span>
+      <span class="notch__line"><span data-notch-line></span></span>
+      <span class="notch__burger" aria-hidden="true"><i></i><i></i></span>
+      <span class="sr" data-i18n="notch.open">Menú</span>
+    </button>
+    <nav class="notch__menu" id="notch-menu" data-notch-menu aria-label="Secciones" data-i18n-aria="notch.nav">
+      <p class="notch__menu-say" data-i18n="notch.menu">¿A dónde te llevo?</p>
+      <ul class="notch__links">
+        <li style="--i:0"><a class="nlink" href="#producto"><span class="nlink__ic" style="--c:var(--mint)"><svg class="i"><use href="#i-folder"/></svg></span><span class="nlink__t" data-i18n="notch.l1">Producto</span><span class="nlink__d" data-i18n="notch.d1">Míralo funcionar</span><i data-arw></i></a></li>
+        <li style="--i:1"><a class="nlink" href="#beevo-ai"><span class="nlink__ic" style="--c:var(--lilac)"><svg class="i"><use href="#i-sparkles"/></svg></span><span class="nlink__t" data-i18n="notch.l2">Beevo AI</span><span class="nlink__d" data-i18n="notch.d2">Tu project manager</span><i data-arw></i></a></li>
+        <li style="--i:2"><a class="nlink" href="#precios"><span class="nlink__ic" style="--c:var(--lemon)"><svg class="i"><use href="#i-receipt"/></svg></span><span class="nlink__t" data-i18n="notch.l3">Precios</span><span class="nlink__d" data-i18n="notch.d3">7 días gratis</span><i data-arw></i></a></li>
+        <li style="--i:3"><a class="nlink" href="#preguntas"><span class="nlink__ic" style="--c:var(--rose)"><svg class="i"><use href="#i-message"/></svg></span><span class="nlink__t" data-i18n="notch.l4">Preguntas</span><span class="nlink__d" data-i18n="notch.d4">Lo que todos preguntan</span><i data-arw></i></a></li>
+      </ul>
+      <div class="notch__menu-cta">
+        <a class="btn btn--line btn--sm" href="https://app.beevo.co/acceder"><span data-i18n="notch.in">Entrar</span></a>
+        <a class="btn btn--ink btn--sm" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="notch.cta">Empieza gratis</span><i data-arw></i></a>
       </div>
-
-      <div class="join__done" data-done hidden>
-        <h2 class="join__title" data-i18n="done.title">Ya estás dentro.</h2>
-        <p class="join__small"><span data-i18n="done.body">Te avisamos en</span> <strong data-done-mail></strong>.</p>
-      </div>
-    </section>
-  </main>
-
+    </nav>
+  </div>
 </div>
 
-<script src="main.js" type="module"></script>
+<main id="top">
+
+  <!-- ░░ HERO ░░
+       El titular en el centro, grande y solo, sobre el brillo de la lista de espera y con el fondo
+       pasando por los cuatro rellenos del manual. Arriba, solo el logotipo, el notch y los dos botones. -->
+  <section class="hero" data-hero>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__in">
+      <h1 class="display hero__title" data-hero-title>
+        <span class="line"><span data-i18n="hero.l1">El CRM para</span> <br class="br-phone"><span class="hl swap" data-swap>freelancers</span></span>
+        <span class="line line--wink"><span data-i18n="hero.l2">que odian los CRM</span>.</span>
+      </h1>
+      <p class="lede" data-hero-in data-i18n="hero.lead">Beevo es el espacio donde organizas todo lo que mueve tu trabajo creativo y profesional: tus clientes, proyectos, tareas y cuentas de cobro.</p>
+      <div class="hero__cta" data-hero-in>
+        <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="hero.cta">Empieza gratis</span><i data-arw></i></a>
+        <a class="btn btn--line btn--lg" href="#precios"><span data-i18n="hero.prices">Ver precios</span><i data-arw></i></a>
+      </div>
+      <p class="hero__note" data-hero-in data-i18n="hero.note">7 días gratis · Cancelas cuando quieras</p>
+    </div>
+  </section>
+
+  <!-- ░░ EL PORQUÉ ░░
+       Una frase con una cifra: lo que se le va a un freelancer en papeleo y para qué existe Beevo. Las
+       palabras nacen apagadas y se encienden al ritmo del scroll (`setupFill`). La cifra es de fuera y
+       va con su fuente; aquí no se inventa ningún número. -->
+  <section class="why" id="por-que" aria-labelledby="why-t">
+    <div class="wrap why__in">
+      <h2 class="why__t" id="why-t" data-fill data-i18n="why.t">Un freelancer pierde <span class="hl">204 horas al año</span> en papeleo: más de cinco semanas de trabajo. Beevo existe para devolvértelas.</h2>
+      <p class="why__src"><span data-i18n="why.src">Fuente:</span> <a href="https://smallpdf.com/blog/freelancer-freedom-index" target="_blank" rel="noopener">Smallpdf, Freelancer Freedom Index 2026</a></p>
+    </div>
+  </section>
+
+  <!-- ░░ EL PRODUCTO ░░
+       La tarjeta grande, con la lista a la izquierda y la demo a la derecha. La tarjeta se
+       queda fija y cada tramo de scroll es una escena: no hay demo que pasar de largo. -->
+  <section class="product" id="producto">
+    <div class="wrap">
+      <header class="head">
+        <h2 class="h2" data-rise data-i18n="pf.a">Todo tu estudio, en un <span class="hl">solo lugar</span>.</h2>
+        <p class="sub" data-reveal data-i18n="pf.b">Clientes, equipo, proyectos y cobros que trabajan juntos. Baja y míralo funcionar.</p>
+      </header>
+    </div>
+    <div class="wrap">
+      <div class="tour" data-tour data-snap="pin">
+        <div class="steps" data-steps>
+          <ol class="steps__list" role="tablist" aria-label="Lo que hace Beevo" data-i18n-aria="tour.aria">
+            <li><button class="step is-on" type="button" role="tab" data-tab="0" aria-selected="true"><span class="step__bar"><i></i></span><span class="step__k">01 · <span data-i18n="tour.k1">Clientes</span></span><span class="step__t" data-i18n="tour.t1">Cada cliente, con su historia.</span><span class="step__b"><span data-i18n="tour.b1">Contactos, proyectos y lo que te debe, en una ficha. Y Beevo te cuenta cómo va.</span></span></button></li>
+            <li><button class="step" type="button" role="tab" data-tab="1" aria-selected="false"><span class="step__bar"><i></i></span><span class="step__k">02 · <span data-i18n="tour.k2">Equipo</span></span><span class="step__t" data-i18n="tour.t2">Todo tu equipo, en un solo lugar.</span><span class="step__b"><span data-i18n="tour.b2">Cada quien ve sus tareas y tú ves cómo avanza todo. Cuando algo se mueve, el equipo se entera.</span></span></button></li>
+            <li><button class="step" type="button" role="tab" data-tab="2" aria-selected="false"><span class="step__bar"><i></i></span><span class="step__k">03 · <span data-i18n="tour.k3">Proyectos</span></span><span class="step__t" data-i18n="tour.t3">Comparte el proyecto con tu cliente.</span><span class="step__b"><span data-i18n="tour.b3">Un enlace y tu cliente ve el avance, el material y sus cuentas de cobro. Sin registros ni contraseñas.</span></span></button></li>
+            <li><button class="step" type="button" role="tab" data-tab="3" aria-selected="false"><span class="step__bar"><i></i></span><span class="step__k">04 · <span data-i18n="tour.k4">Cobros</span></span><span class="step__t" data-i18n="tour.t4">Cuentas de cobro automáticas.</span><span class="step__b"><span data-i18n="tour.b4">Beevo las prepara cada mes con lo de cada proyecto. Tú decides si las envías o las descartas.</span></span></button></li>
+            <li><button class="step" type="button" role="tab" data-tab="4" aria-selected="false"><span class="step__bar"><i></i></span><span class="step__k">05 · <span data-i18n="tour.k5">Beevo AI</span></span><span class="step__t" data-i18n="tour.t5">Sube un PDF y recibe el plan.</span><span class="step__b"><span data-i18n="tour.b5">Beevo lo lee y te propone las tareas, con fechas y responsables. Tú apruebas.</span></span></button></li>
+          </ol>
+          <!-- En un teléfono la lista es una fila de pestañas: lo que dice la elegida va aquí. -->
+          <p class="steps__cap" data-steps-cap aria-hidden="true"></p>
+          <div class="steps__cta">
+            <a class="btn btn--ink" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="tour.cta">Empieza gratis</span><i data-arw></i></a>
+            <small data-i18n="tour.note">7 días gratis, sin compromiso.</small>
+          </div>
+        </div>
+
+        <div class="demo" id="demo" data-demo>
+          <!-- La mascota: asoma por encima de la demo y, al bajar, se va a vivir a su notch. -->
+          <div class="demo__mascot" data-hero-mascot aria-hidden="true">
+            <span class="blob blob--hero" data-blob data-beevo data-persona data-hero-blob></span>
+          </div>
+          <div class="demo__frame" data-demo-frame>
+            <span class="demo__aurora" aria-hidden="true"></span>
+            <div class="win" data-win>
+              <div class="win__chrome">
+                <span class="win__dots"><i></i><i></i><i></i></span>
+                <span class="win__url">app.beevo.co</span>
+                <span class="win__kbd">Beevo AI <kbd>⌘K</kbd></span>
+              </div>
+              <div class="win__app">
+                <nav class="win__rail" aria-hidden="true">
+                  <img src="assets/images/ISOTIPO_NEGRO.png" alt="" class="win__mark">
+                  <span data-rail="home"><svg class="i"><use href="#i-house"/></svg></span>
+                  <span data-rail="tasks"><svg class="i"><use href="#i-tasks"/></svg></span>
+                  <span data-rail="projects"><svg class="i"><use href="#i-folder"/></svg></span>
+                  <span data-rail="calendar"><svg class="i"><use href="#i-calendar"/></svg></span>
+                  <span data-rail="boards"><svg class="i"><use href="#i-shapes"/></svg></span>
+                  <i class="win__rail-gap"></i>
+                  <span data-rail="clients"><svg class="i"><use href="#i-users"/></svg></span>
+                  <span data-rail="invoices"><svg class="i"><use href="#i-receipt"/></svg></span>
+                  <span data-rail="ledger"><svg class="i"><use href="#i-wallet"/></svg></span>
+                  <span class="win__me">AG</span>
+                </nav>
+                <div class="win__main" data-scene-root>
+                  <div class="win__scene" data-scene></div>
+
+                  <!-- El notch de la demo: el mismo que el de la página. -->
+                  <div class="notch notch--mock" data-mock-notch>
+                    <span class="notch__glow" aria-hidden="true"></span>
+                    <span class="notch__ring" aria-hidden="true"></span>
+                    <div class="notch__body" data-notch-body>
+                      <div class="notch__pill">
+                        <span class="notch__seat" data-mock-seat><span class="blob blob--notch" data-blob data-beevo data-persona data-mock-blob></span></span>
+                        <span class="notch__name"><span data-persona-name>Beevo</span></span>
+                        <span class="notch__line"><span data-notch-line></span></span>
+                      </div>
+                      <div class="notch__panel" data-mock-panel></div>
+                    </div>
+                  </div>
+
+                  <svg class="fake-cursor" data-cursor viewBox="0 0 24 24" aria-hidden="true"><path d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ BEEVO AI ░░
+       Un panel en el casi negro del manual, redondeado sobre el fondo y del alto de la pantalla: se ve
+       entero sin bajar. Lo que es Beevo AI, dicho de un vistazo: Beevo en el centro, alrededor todo lo
+       que conoce de tu estudio y, a sus pies, los cinco que puede ser. -->
+  <section class="ai" id="beevo-ai" data-dark data-snap>
+    <div class="wrap ai__in">
+      <div class="ai__copy">
+        <p class="kicker" data-reveal><svg class="i"><use href="#i-sparkles"/></svg><span data-i18n="ai.kicker">Beevo AI</span></p>
+        <h2 class="ai__title" data-reveal><span data-i18n="ai.a">Beevo se encarga de la gestión.</span> <span class="ai__hl" data-i18n="ai.b">Tú, de crear.</span></h2>
+        <p class="ai__lead" data-reveal data-i18n="ai.lead">Conoce todo tu estudio: proyectos, tareas, clientes, calendario y documentos. Con eso arma el plan, reparte las tareas y deja listas tus cuentas de cobro.</p>
+        <ul class="ai__asks" data-reveal>
+          <li data-i18n="ai.q1">«¿Cómo va Onne?»</li>
+          <li data-i18n="ai.q2">«Reparte las tareas de esta semana»</li>
+          <li data-i18n="ai.q3">«Prepara la cuenta de cobro de Yourlay»</li>
+        </ul>
+        <p class="ai__note" data-reveal data-i18n="ai.note">Nada se envía sin tu visto bueno, y cualquier cambio se deshace con un clic.</p>
+      </div>
+      <div class="ai__stage">
+        <!-- Las fichas son lo que Beevo conoce; las coloca main.js en arcos, y al pasar por encima dicen qué son. -->
+        <div class="orbit" data-orbit aria-hidden="true">
+          <div class="orbit__field" data-orbit-field>
+            <span class="tok" data-tok data-label="Proyectos" data-i18n-label="tok.projects"><i class="folder folder--mint"></i></span>
+            <span class="tok" data-tok data-label="Tareas" data-i18n-label="tok.tasks"><svg class="i"><use href="#i-tasks"/></svg></span>
+            <span class="tok tok--face" data-tok data-label="Tu equipo" data-i18n-label="tok.team"><b style="--c:#caffd5">AG</b></span>
+            <span class="tok" data-tok data-label="Google Calendar" data-i18n-label="tok.gcal"><span class="tok__date"><small data-i18n="tok.thu">JUE</small>8</span></span>
+            <span class="tok" data-tok data-label="Google Meet" data-i18n-label="tok.meet"><svg class="i"><use href="#i-video"/></svg></span>
+            <span class="tok" data-tok data-label="Proyectos" data-i18n-label="tok.projects"><i class="folder folder--lilac"></i></span>
+            <span class="tok tok--sticky" data-tok data-label="Notas" data-i18n-label="tok.notes"><i></i></span>
+            <span class="tok" data-tok data-label="Cuentas de cobro" data-i18n-label="tok.bills"><svg class="i"><use href="#i-receipt"/></svg></span>
+            <span class="tok tok--face" data-tok data-label="Tu equipo" data-i18n-label="tok.team"><b style="--c:#d2d0fc">BS</b></span>
+            <span class="tok tok--badge" data-tok data-label="Documentos" data-i18n-label="tok.docs"><b>PDF</b></span>
+            <span class="tok" data-tok data-label="Pizarras" data-i18n-label="tok.boards"><svg class="i"><use href="#i-shapes"/></svg></span>
+            <span class="tok" data-tok data-label="Proyectos" data-i18n-label="tok.projects"><i class="folder folder--lemon"></i></span>
+            <span class="tok" data-tok data-label="Contabilidad" data-i18n-label="tok.ledger"><svg class="i"><use href="#i-wallet"/></svg></span>
+            <span class="tok tok--face" data-tok data-label="Clientes" data-i18n-label="tok.clients"><b style="--c:#ecbaf6">CO</b></span>
+            <span class="tok" data-tok data-label="Correo" data-i18n-label="tok.mail"><svg class="i"><use href="#i-mail"/></svg></span>
+            <span class="tok tok--badge" data-tok data-label="Extractos del banco" data-i18n-label="tok.sheets"><b style="--c:#edfc98">CSV</b></span>
+            <span class="tok" data-tok data-label="Proyectos" data-i18n-label="tok.projects"><i class="folder folder--rose"></i></span>
+            <span class="tok" data-tok data-label="Fechas" data-i18n-label="tok.clock"><svg class="i"><use href="#i-clock"/></svg></span>
+            <span class="tok tok--face" data-tok data-label="Tu equipo" data-i18n-label="tok.team"><b style="--c:#edfc98">CM</b></span>
+            <span class="tok" data-tok data-label="Lo que se repite" data-i18n-label="tok.repeat"><svg class="i"><use href="#i-repeat"/></svg></span>
+          </div>
+          <div class="orbit__core">
+            <span class="blob blob--orbit" data-blob data-beevo data-persona></span>
+            <span class="floor"></span>
+          </div>
+          <p class="orbit__label" data-orbit-label></p>
+        </div>
+        <!-- Personalízalo: el dock a los pies de Beevo. Elegir uno viste al del centro y al del notch. -->
+        <div class="dock" id="personaliza" data-lineup role="group" aria-labelledby="dock-t">
+          <p class="dock__t" id="dock-t" data-i18n="own.t">Personalízalo</p>
+          <div class="dock__row">
+            <button type="button" class="dock__one" aria-pressed="false" data-preset='{"shape":"circle","color":"lavender","finish":"flat","eyes":"dots","accent":"none","name":"Sophie"}'><span class="blob blob--dock" data-blob data-shape="circle" data-color="lavender" data-finish="flat" data-eyes="dots"></span><span class="dock__name">Sophie</span></button>
+            <button type="button" class="dock__one" aria-pressed="false" data-preset='{"shape":"squircle","color":"lemon","finish":"grain","eyes":"lines","accent":"band","name":"Nico"}'><span class="blob blob--dock" data-blob data-shape="squircle" data-color="lemon" data-finish="grain" data-eyes="lines" data-accent="band"></span><span class="dock__name">Nico</span></button>
+            <button type="button" class="dock__one is-on" aria-pressed="true" data-preset='{"shape":"pebble","color":"mint","finish":"glow","eyes":"round","accent":"none","name":"Beevo"}'><span class="blob blob--dock" data-blob data-shape="pebble" data-color="mint"></span><span class="dock__name">Beevo</span></button>
+            <button type="button" class="dock__one" aria-pressed="false" data-preset='{"shape":"leaf","color":"rose","finish":"aurora","eyes":"arcs","accent":"aura","name":"Luna"}'><span class="blob blob--dock" data-blob data-shape="leaf" data-color="rose" data-finish="aurora" data-eyes="arcs" data-accent="aura"></span><span class="dock__name">Luna</span></button>
+            <button type="button" class="dock__one" aria-pressed="false" data-preset='{"shape":"diamond","color":"cream","finish":"glow","eyes":"squares","accent":"satellite","name":"Otto"}'><span class="blob blob--dock" data-blob data-shape="diamond" data-color="cream" data-eyes="squares" data-accent="satellite"></span><span class="dock__name">Otto</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ PRECIOS ░░ Copiados de Billing::Plan, como en ../site. -->
+  <section class="prices" id="precios" data-plans>
+    <div class="wrap" data-snap>
+      <header class="prices__head">
+        <div class="head">
+          <h2 class="h2" data-rise data-i18n="pr.a">Un project manager por el precio de <span class="hl">dos lattes</span> al mes.</h2>
+          <p class="sub" data-reveal data-i18n="pr.b">Con Beevo AI incluido y siete días gratis para probarlo todo. Después eliges.</p>
+        </div>
+        <div class="prices__ctl" data-reveal>
+          <div class="seg" data-seg="interval" role="group" aria-label="Periodo" data-i18n-aria="pr.period">
+            <span class="seg__pill" aria-hidden="true"></span>
+            <button type="button" data-interval="month" data-i18n="pr.month">Mensual</button>
+            <button type="button" data-interval="year"><span data-i18n="pr.year">Anual</span> <em>−20 %</em></button>
+          </div>
+        </div>
+      </header>
+      <div class="prices__grid">
+        <article class="plan" data-plan="solo" data-reveal>
+          <p class="plan__name">Solo</p>
+          <p class="plan__who" data-i18n="pr.solo.who">Para una persona.</p>
+          <p class="plan__price"><b data-price>—</b><span data-per></span></p>
+          <p class="plan__fine" data-fine></p>
+          <a class="btn btn--line btn--wide" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="pr.solo.cta">Empezar con Solo</span><i data-arw></i></a>
+          <ul class="plan__list">
+            <li data-i18n="pr.s1">Todo Beevo, para ti</li>
+            <li data-i18n="pr.s2">Beevo AI incluido</li>
+            <li data-i18n="pr.s3">7 días gratis</li>
+          </ul>
+        </article>
+        <article class="plan plan--team" data-plan="team" data-reveal>
+          <p class="plan__badge" data-i18n="pr.team.badge">Para agencias</p>
+          <p class="plan__name" data-i18n="pr.team.name">Equipos</p>
+          <p class="plan__who" data-i18n="pr.team.who">Para estudios con equipo. Se paga por persona.</p>
+          <p class="plan__price"><b data-price>—</b><span data-per></span></p>
+          <p class="plan__fine" data-fine></p>
+          <a class="btn btn--ink btn--wide" data-plan-link data-plan="team" href="https://app.beevo.co/registro?plan=team&amp;interval=month"><span data-i18n="pr.team.cta">Empezar con Equipos</span><i data-arw></i></a>
+          <ul class="plan__list">
+            <li data-i18n="pr.t1">Todo Beevo, para tu equipo</li>
+            <li data-i18n="pr.t2">Un Beevo para cada persona</li>
+            <li data-i18n="pr.t3">Pagas solo por quien está adentro</li>
+          </ul>
+        </article>
+        <article class="plan" data-plan="lifetime" data-reveal>
+          <p class="plan__name" data-i18n="pr.life.name">De por vida</p>
+          <p class="plan__who" data-i18n="pr.life.who">Solo, pagado una vez.</p>
+          <p class="plan__price"><b data-price>—</b><span data-per></span></p>
+          <p class="plan__fine" data-fine></p>
+          <a class="btn btn--line btn--wide" data-plan-link data-plan="lifetime" href="https://app.beevo.co/registro?plan=lifetime&amp;interval=once"><span data-i18n="pr.life.cta">Comprar de por vida</span><i data-arw></i></a>
+          <ul class="plan__list">
+            <li data-i18n="pr.l1">Todo lo de Solo</li>
+            <li data-i18n="pr.l2">Un solo pago, sin renovaciones</li>
+          </ul>
+        </article>
+      </div>
+      <p class="prices__foot" data-reveal data-i18n="pr.foot">Pagos seguros con Stripe. Te pedimos la tarjeta al empezar, pero no te cobramos nada durante los 7 días de prueba.</p>
+    </div>
+  </section>
+
+  <!-- ░░ PREGUNTAS ░░ -->
+  <section class="faq" id="preguntas">
+    <div class="wrap faq__grid" data-snap>
+      <div class="faq__side">
+        <h2 class="h2" data-rise data-i18n="faq.a">Preguntas <span class="hl">frecuentes</span>.</h2>
+        <p class="sub" data-reveal><span data-i18n="faq.more">¿Otra duda?</span> <a href="https://app.beevo.co/soporte" data-i18n="faq.write">Escríbenos</a>.</p>
+      </div>
+      <div class="faq__list" data-faq>
+        <details data-reveal><summary><span data-i18n="faq.q1">¿Qué es Beevo?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a1">Un CRM para freelancers y agencias: clientes, proyectos, tareas, calendario, pizarras, cuentas de cobro y contabilidad en un solo lugar, con un project manager con IA que se encarga de la gestión.</p></div></details>
+        <details data-reveal><summary><span data-i18n="faq.q2">¿Me cobran apenas me registro?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a2">No. Te pedimos la tarjeta al empezar, pero no te cobramos nada durante 7 días. Si cancelas antes, no pagas.</p></div></details>
+        <details data-reveal><summary><span data-i18n="faq.q3">¿Puedo usar Beevo sin la IA?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a3">Sí. Todo lo demás —clientes, proyectos, tareas, calendario y cobros— funciona sin ella. Beevo AI está arriba de la pantalla para cuando lo quieras usar.</p></div></details>
+        <details data-reveal><summary><span data-i18n="faq.q4">¿Puede crear cosas sin preguntarme?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a4">Lo que le pides directo, lo hace. Lo demás —un plan sacado de un PDF, una cuenta de cobro— te lo propone para que lo apruebes. Y si algo no te gusta, lo deshaces con un clic.</p></div></details>
+        <details data-reveal><summary><span data-i18n="faq.q5">¿Está en el celular?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-apps-answer data-i18n="faq.a5">Beevo funciona en el navegador de tu celular, y las apps para iPhone y Android llegan muy pronto.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ ¿EMPEZAMOS? ░░ La pregunta a un lado y, al otro, las dos dudas que quedan. -->
+  <section class="cta" id="empezar">
+    <div class="wrap cta__grid" data-snap>
+      <div class="cta__main">
+        <span class="blob blob--end" data-blob data-beevo data-persona data-end-blob aria-hidden="true"></span>
+        <h2 class="h2 h2--xl" data-rise data-i18n="end.a">¿Listo para <span class="hl">ordenar</span> tu estudio?</h2>
+        <p class="sub" data-reveal data-i18n="end.b">Crea tu cuenta en un minuto y prueba Beevo siete días gratis.</p>
+        <div class="cta__btns" data-reveal>
+          <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="end.cta">Empieza gratis</span><i data-arw></i></a>
+          <a class="btn btn--line btn--lg" href="https://app.beevo.co/acceder"><span data-i18n="end.in">Ya tengo cuenta</span><i data-arw></i></a>
+        </div>
+      </div>
+      <div class="cta__side">
+        <div class="cta__tile" data-reveal>
+          <span class="tile__ic"><svg class="i"><use href="#i-users"/></svg></span>
+          <p><b data-i18n="end.k1">¿Trabajas con equipo?</b> <span data-i18n="end.t1">Equipos se paga por persona, y cada quien tiene su propio Beevo.</span></p>
+          <a class="btn btn--line btn--sm" data-plan-link data-plan="team" href="https://app.beevo.co/registro?plan=team&amp;interval=month"><span data-i18n="end.l1">Empieza con Equipos</span><i data-arw></i></a>
+        </div>
+        <div class="cta__tile" data-reveal>
+          <span class="tile__ic"><svg class="i"><use href="#i-repeat"/></svg></span>
+          <p><b data-i18n="end.k2">¿Prefieres pagar una vez?</b> <span data-i18n="end.t2">De por vida es Beevo Solo para siempre, sin renovaciones.</span></p>
+          <a class="btn btn--line btn--sm" href="#precios"><span data-i18n="end.l2">Ver precios</span><i data-arw></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <img src="assets/images/LOGO_NEGRO.png" alt="Beevo" width="850" height="263" class="foot__logo">
+      <p class="foot__tag" data-i18n="foot.tag">El CRM que trae su propio project manager.</p>
+    </div>
+    <nav class="foot__col" aria-labelledby="fc1"><p id="fc1" data-i18n="foot.c1">Producto</p><a href="#producto" data-i18n="foot.p1">La plataforma</a><a href="#beevo-ai" data-i18n="foot.p2">Beevo AI</a><a href="#precios" data-i18n="foot.p3">Precios</a><a href="#preguntas" data-i18n="foot.p4">Preguntas</a></nav>
+    <nav class="foot__col" aria-labelledby="fc2"><p id="fc2">Beevo</p><a href="https://app.beevo.co/soporte" data-i18n="foot.b1">Soporte</a><a href="/privacidad" data-privacy data-i18n="foot.b2">Privacidad</a><a href="https://app.beevo.co/legal/condiciones.pdf" data-i18n="foot.b3">Condiciones</a></nav>
+    <nav class="foot__col" aria-labelledby="fc3"><p id="fc3" data-i18n="foot.c3">Tu cuenta</p><a href="https://app.beevo.co/acceder" data-i18n="foot.a1">Entrar</a><a data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month" data-i18n="foot.a2">Crear cuenta</a></nav>
+  </div>
+  <div class="wrap foot__base"><p>© 2026 Beevo</p><p data-i18n="foot.made">Hecho en Colombia, para estudios de todas partes.</p></div>
+</footer>
+
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/lenis.min.js" defer></script>
+<script src="i18n.js" defer></script>
+<script src="main.js" defer></script>
 </body>
 </html>

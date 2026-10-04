@@ -1,149 +1,102 @@
-# Beevo · lista de espera
+# Beevo · beevo.co
 
-**Una sola pantalla**, de expectativa, al estilo de rikkko.com: la marca y la cuenta atrás
-arriba, la flor en medio, la promesa abajo a la izquierda y el correo abajo a la derecha.
-Es lo que está en el aire hasta que Beevo abra. La página completa, para el lanzamiento,
-está en `../landing`.
+La landing de Beevo. Sustituye a la lista de espera, que vivía en este mismo repositorio; se
+construyó como `site-f/` en el repositorio de la aplicación, que sigue siendo donde se itera.
 
-Sitio estático: **sin build, sin dependencias, sin CDN**. `index.html`, `styles.css`,
-`main.js` y `assets/`. Moverlo es copiar la carpeta.
+## De dónde sale
+
+Propuesta para `beevo.co`, al lado de `../site`, `../site-b`, `../site-ai` y `../site-e`. Es el orden
+de `../site-e` —portada, el porqué, el producto, Beevo AI, precios, preguntas y el cierre— vestido
+como la lista de espera (`../waitlist`): el fondo en los rellenos del manual con su grano, los
+titulares en Fraunces con la palabra importante sobre un trazo de marcador, las píldoras, el isotipo
+que sigue al puntero y la cortina de tinta que se levanta al entrar.
 
 ```bash
 npm run dev      # http://localhost:4321
 ```
 
-Hace falta un servidor (cualquiera): `main.js` es un módulo ES y `file://` los bloquea.
+Sitio estático, sin build: `index.html`, `styles.css`, `i18n.js`, `main.js` y `assets/`. Hace falta
+un servidor. Se despliega en Vercel desde este repositorio, sin build.
 
-## Dónde vive
+## De arriba abajo
 
-**Esta carpeta se sube a Vercel; la aplicación (el Rails) va a Heroku.** Son dos despliegues que
-no comparten nada: esto es HTML, CSS y un módulo de JavaScript, sin build. Lo único que los une
-es que el formulario manda el correo a la aplicación (`ENDPOINT`, más abajo).
+1. **Portada**. El titular solo en el centro, sobre el brillo del color emparejado con el fondo, y el
+   fondo pasando por menta, lavanda, amarillo y rosa mientras se mira. El trazo de «project manager»
+   va **del color del fondo**: iba del color del brillo, que es lo que tiene detrás, y no se veía.
+   Arriba, el logotipo, el notch y los dos botones, nada más. Hubo alrededor del titular una flor,
+   luego unas notas flotando y luego a Beevo hablando desde el notch: las tres ensuciaban la portada.
+2. **El porqué**: una sola frase grande, «Un freelancer pierde 204 horas al año en papeleo: más de
+   cinco semanas de trabajo. Beevo existe para devolvértelas.», con su fuente (Smallpdf, Freelancer
+   Freedom Index 2026). Sus palabras nacen apagadas y se llenan de tinta al ritmo del scroll
+   (`setupFill`), y el trazo de la cifra se dibuja cuando le llega el turno. Fue una fila de
+   herramientas que se tachaban y después una escena en la que volaban al notch: la primera se pasaba
+   de largo y la segunda cargaba la página.
+3. **El producto**: la tarjeta grande con los pasos a un lado y la demo al otro, fija mientras se
+   recorren las cinco escenas —Clientes, Equipo, proyecto compartido, cuentas de cobro automáticas y
+   Beevo AI—. La mascota asoma por encima de la demo y, al bajar, se mete en su notch.
+4. **Beevo AI**, el panel en el casi negro del manual: el titular, lo que conoce, tres cosas que se le
+   piden y, al otro lado, Beevo en el centro con lo que conoce de tu estudio en arcos a su alrededor.
+   **Mide lo que la pantalla debajo de la barra** y lo de dentro se mide con ella, así que se ve
+   entero sin bajar. A los pies de Beevo va el dock de **Personalízalo**: cinco Beevos, y elegir uno
+   viste al del centro y al del notch. Fue una franja aparte debajo («Hazlo tuyo»), que sonaba raro y
+   hacía que el panel pidiera pantalla y media. En un teléfono las preguntas van en una fila que se
+   desliza y la órbita se aplana, y también cabe.
+5. **Precios**: «Un project manager por el precio de dos lattes al mes». Dos lattes de cafetería cuestan
+   más o menos lo que el plan Solo en pesos, euros y dólares; se dice «lattes» y no una marca.
+6. **Preguntas** y 7. **el cierre**.
 
-En Vercel: importar el repositorio, **Root Directory = `waitlist`**, Framework Preset = *Other*,
-y dejar vacíos el comando de build y el directorio de salida. `vercel.json` pone la caché de
-`assets/` (un día: los ficheros no llevan huella en el nombre, así que un año los dejaría
-pegados) y quita el `.html` de las direcciones. O desde esta carpeta, `npx vercel --prod`.
+## El notch es el menú
 
-**El dominio desde el que se sirva tiene que estar en la lista de la aplicación**
-(`WAITLIST_ORIGINS`, en Heroku): por defecto `https://beevo.co` y `https://www.beevo.co`. Si
-no, el correo **se guarda igual** pero el navegador no deja leer la respuesta y la página dice
-"no hemos podido apuntarte". Para las direcciones de prueba de Vercel, que cambian en cada
-despliegue, vale un comodín: `https://beevo-waitlist-*.vercel.app`.
+La barra lleva el logotipo y los botones de entrar y empezar, **sin fondo**, y se va al bajar y vuelve
+al subir (`paintNav`): bajando se lee, subiendo se busca algo. **La navegación vive en el notch**, que
+está siempre arriba desde que baja al levantarse la cortina: Beevo y el icono que dice que se abre;
+abierto, las cuatro secciones —con su color y una línea de qué hay— y los dos botones. No dice nada
+más: estuvo hablando en la portada y narrando cada sección, y eran dos voces en una página donde la
+demo ya tiene la suya, en su propio notch. Con el menú abierto, donde no caben a su lado, los botones
+de la barra se apartan.
 
+Los titulares de sección entran palabra a palabra por su ranura, como el de la portada, y su trazo se
+dibuja al final (`setupRise`).
 
-## Lo que se configura
+## El scroll
 
-Todo arriba del todo en `main.js`:
+Suave, con **Lenis**. Y encima, un ajuste: al dejar de bajar, si una sección que cabe en la pantalla
+quedó casi entera a la vista pero cortada, la página se desliza lo que falta para verla completa
+(`setupSettle`, sobre lo marcado con `data-snap`). No frena: solo actúa con el scroll ya quieto, un
+gesto nuevo lo interrumpe, sigue la dirección en la que se iba y hacia atrás solo corrige pasarse un
+poco. Dentro del recorrido de la demo no hace nada, y lo que la página mueve sola (el menú, las
+respuestas del notch) no lo dispara. Con «menos movimiento» no hay ni scroll suave ni ajuste.
 
-| constante | qué hace |
-|---|---|
-| `ENDPOINT` | A dónde van los correos: `https://app.beevo.co/lista-de-espera/apuntarse`, que es el Rails (`WaitlistSignupsController`); se miran y se exportan en `/admin`. `POST` con `{ email, website, locale }` en JSON — `website` es la trampa para robots, un campo escondido del formulario. **En `localhost` se manda al Rails de desarrollo** (`http://localhost:3010`), para no apuntar correos de prueba en la lista de verdad. El Rails solo deja leer la respuesta a los dominios de su lista (`WAITLIST_ORIGINS`, por defecto `beevo.co` y `www.beevo.co`): si la página se sirve desde otro, hay que añadirlo allí. Vacío: los correos se quedan en el navegador y la confirmación funciona igual. |
-| `LAUNCH_AT` | El día de apertura (`"2026-10-05T00:00:00-05:00"`, medianoche en Colombia): la chapa de arriba es la cuenta atrás, "8d 12h 10m 38s". El ancho de la chapa **se anima** cuando el texto cambia de tamaño (al perder un dígito, o al pasar de la fecha a la cuenta), en vez de saltar. Vacío, se queda con lo que diga el HTML: "5 de octubre". |
-| `THEMES`, `THEME_EVERY` | Los colores por los que pasa la página y cuánto dura cada uno. |
+## El idioma
 
-## Idioma
+No se elige: **lo dice el navegador**. El primero de sus idiomas que sea español o inglés manda, y si
+no tiene ninguno de los dos, inglés. `?lang=es` o `?lang=en` lo fuerzan, que es lo que leen los
+buscadores en las versiones de cada idioma (`hreflang`). El español vive en el HTML; el inglés y lo
+que no está en el HTML, en `i18n.js`.
 
-**En español y en inglés**, en la misma dirección. El idioma lo elige solo, en este orden:
-`?lang=es` o `?lang=en` en la dirección; si no, el que se eligió aquí otra vez (`localStorage`,
-`beevo:lang`); y si no, el del navegador —el primero de sus idiomas que sea español o inglés—.
-Todo lo demás es español.
+## Lo que se decide antes de publicar
 
-Arriba a la derecha, al lado de la cuenta atrás, va **ES / EN**: cambia los textos en su sitio,
-sin recargar (también `<html lang>`, el título y la descripción) y se recuerda. Todos los textos
-viven en `TEXT`, arriba de `main.js`, cada uno con su clave; en el HTML lleva el español, que es
-lo que se lee sin JavaScript, y la clave en `data-i18n` (o `data-i18n-attr="placeholder:clave"`
-para un atributo). Un texto nuevo necesita su clave en los dos idiomas. El formulario manda
-también `locale` (`es` o `en`); el Rails puede ignorarlo.
+Arriba de `main.js`:
 
-En inglés la frase es "Your business doesn’t run itself… or does it?" y la palabra rota igual
-(`who`), pero "itself" no concuerda con nada: su final es siempre la f.
+- `APPS_LIVE` (falso): mientras las apps no estén en las tiendas, la pregunta del celular dice que
+  llegan muy pronto. Al publicarlas, `true`.
+- Y como todos los botones llevan a `/registro`, el registro tiene que estar abierto
+  (`SIGNUPS_OPEN=true`) el día que esto se publique.
 
-**La privacidad tiene dos páginas**: `privacidad.html` y su traducción, `privacy.html`, enlazadas
-entre sí; el pie enlaza la del idioma puesto. Si cambia una, cambia la otra (la española manda).
+## Piezas
 
-## La frase
+- **Colores: los seis del manual** y nada más. El fondo y su brillo van en pareja (menta con
+  lavanda, lavanda con menta, amarillo con rosa, rosa con amarillo); los grises salen del casi negro.
+- **Tipografía**: la página en la Neulis de la marca (`Neulis-Light.otf`, la de las letras de gancho,
+  como la lista de espera); lo que imita al producto —la demo, el notch— en la de letras de siempre
+  (`NeulisAlt-Light.otf`). Los titulares en Fraunces.
+- **El isotipo no gira** ni se deforma: el cursor y la cortina lo mueven y lo escalan, nada más.
+- **Textos**: para Colombia y España a la vez. Nada de «brief» ni «iguala»: se dice PDF y cuentas de
+  cobro. Las cifras de fuera llevan su fuente al lado; no se inventa ninguna.
+- **Movimiento**: GSAP + ScrollTrigger y Lenis, vendorizados en `assets/vendor`. El único pin es el
+  del recorrido del producto.
+- **Precios**: copiados de `Billing::Plan`. La moneda la decide el país, con la regla del Rails
+  (`https://app.beevo.co/precios/moneda`, y si no contesta, se adivina en el navegador).
 
-> **Tu negocio no se maneja solo… ¿o sí?**
-> Beevo es el espacio donde organizas todo lo que mueve tu trabajo creativo y profesional.
->
-> El título hace la pregunta y el subtítulo **dice qué es Beevo**, en una sola frase. Fue
-> "Sal y tómate un cafecito…", que contestaba al "¿o sí?" con gracia pero no decía qué es el
-> producto. No dice "negocio": la palabra del título ya va rotando justo para no limitarlo a eso.
-
-**La palabra va cambiando** por quien usa Beevo: negocio, estudio, agencia, productora,
-agenda, equipo, marca, facturación. Cada 2,4 s, subiendo la vieja y entrando la nueva desde
-abajo, y el ancho del hueco se anima de una a otra para que lo de al lado se aparte en vez
-de saltar. La lista está en `WHO`, arriba de `main.js`.
-
-**Y "solo" concuerda con ella**: la agencia no se maneja *sola*. Cada palabra lleva su
-final (`["agencia", "a"]`) y la última letra de "solo" rota a la vez, solo cuando cambia.
-Por eso la lista es **solo de singulares**: un plural obligaría a cambiar también "Tu" y
-"maneja", y eso ya es otra frase moviéndose.
-
-La palabra va sobre un **trazo de marcador del color del brillo**, que es el que rota con
-el fondo, así que la marca cambia de color con la página. "¿o sí?" lleva el eje `WONK` de
-Fraunces encendido: las mismas letras con un punto de guasa.
-
-Son tres renglones fijos y la palabra va sola en el primero: así, cuando cambia de largo,
-no empuja nada al renglón de abajo. Medido en 375 px con las ocho palabras: un renglón por
-línea, nada se sale y la página sigue cabiendo en una pantalla.
-
-**Las letras se parten agrupadas por palabra.** Sueltas, cada letra es una caja aparte y
-el navegador puede cortar el renglón entre dos de ellas, en mitad de una palabra.
-
-**La rotación, como el cambio de color, se para con la pestaña en segundo plano** y no
-existe con `prefers-reduced-motion`, donde se queda "Tu negocio no se maneja solo".
-
-**El título va en Fraunces y el texto en Neulis**, al revés que en la landing: Fraunces a
-peso 500 y con el eje `SOFT` subido da un titular con cuerpo; Neulis se queda para lo que
-se lee seguido. Lo mismo en el bloque del correo.
-
-## Cómo está pensada
-
-**Tres filas y la flor se queda con lo que sobra.** La pantalla es una rejilla —arriba,
-la flor, abajo— y la flor ocupa el hueco del medio y nunca más, así que no puede montarse
-encima del texto. En rikkko el personaje tapa medio titular; aquí eso ya se probó en el
-hero de la landing y se leía como desorden.
-
-**La página cambia de color sola.** Pasa por los cuatro rellenos claros del manual cada
-cinco segundos, y cada fondo lleva su isotipo y su brillo emparejados exactamente como en
-la página 10 del manual: menta con la flor lila, lila con la menta, amarillo con la rosa,
-rosa con la amarilla. El casi negro y el crema no entran: el primero cambiaría la tinta de
-todo y el segundo no se distingue del blanco del campo.
-
-**Mientras escribes el correo, se para.** Que el fondo cambie de color debajo de lo que
-estás tecleando distrae justo en el único momento que importa. También se para con la
-pestaña en segundo plano.
-
-**El brillo es color y no degradado.** Un `radial-gradient` no se anima entre dos colores
-—salta—, así que el color va en `background-color` y la forma la pone una máscara.
-
-**La flor mira hacia el puntero**: se inclina en 3D siguiéndolo, suavizado con `lerp`, y
-flota sola cuando no hay ratón.
-
-**Al apuntarse**, la flor da una vuelta y suelta ocho pétalos de colores.
-
-**No hay contador de apuntados.** Lo hubo, con un número puesto a mano mientras no
-hubiera backend; arriba a la derecha va ahora la cuenta atrás hasta el día de apertura, con la
-misma letra que tenía el contador. Si algún día se quiere enseñar la cifra, que sea la de verdad.
-
-Lo demás viene de la landing: la cortina de entrada, el titular letra a letra, el cursor
-que es el propio isotipo, el botón magnético, el grano.
-
-## Tamaños
-
-**Siempre una sola pantalla, sin scroll**, en cualquier tamaño. La página mide lo que la
-pantalla (`100svh`, la más pequeña: con la barra del navegador puesta tampoco rueda), y quien
-encoge es la flor, que se queda con el alto que sobre.
-
-- **Escritorio**: dos columnas abajo, la flor en medio.
-- **Estrecho** (≤ 860 px): una columna, y la letra y los huecos de abajo se miden **en alto de
-  pantalla** (`svh`). Se dejaba rodar "porque no cabía"; no cabía porque la flor tenía un alto
-  fijo y la letra no miraba el alto. El campo y el botón van en una fila también en un teléfono.
-- **Tumbado o muy bajo**: vuelve a las dos columnas —apilado no cabe en 375 px de alto— con la
-  letra mirando el alto. Si ni así, lo primero que sobra es la nota de debajo del campo.
-
-Comprobado sin scroll ni nada cortado en 320×568, 375×667, 390×844, 667×375, 768×1024 y 1440×900.
-
-Con `prefers-reduced-motion` no se mueve nada, los colores no rotan y todo queda legible.
+Comprobado en 1440×900, 1366×700, 1100×800, 1024×768, 820×1180, 760, 721, 390×844, 360×740 y
+320×640, en español y en inglés y con «menos movimiento», sin desborde lateral ni errores en consola.
