@@ -295,7 +295,7 @@
     const type = (node, text, d) => { const o = { n: 0 }; return gsap.to(o, { n: text.length, duration: d, ease: "none", onUpdate: () => { node.textContent = text.slice(0, Math.round(o.n)) } }) }
     const think = text => `<div class="np"><p class="np__think"><span class="np__dots"><i></i><i></i><i></i></span>${esc(text)}</p></div>`
     const done = (text, extra = "") => `<div class="np"><div class="np__done"><span class="np__check">${ICON("check")}</span><p class="np__say">${esc(text)}</p></div>${extra}</div>`
-    const FACE = { AG: "#caffd5", BS: "#d2d0fc", CM: "#edfc98", MO: "#ecbaf6" }
+    const FACE = { AG: "#caffd5", BS: "#d2d0fc", CM: "#edfc98", MO: "#ecbaf6", MR: "#ecbaf6" }
     const face = c => (c === "client" ? `<b class="face face--client">${t("client")}</b>` : `<b class="face" style="--c:${FACE[c]}">${c}</b>`)
     const railOn = name => rails.forEach(r => r.classList.toggle("is-on", r.dataset.rail === name))
     const hopBeevo = () => N().beevos.forEach(hop)
@@ -321,6 +321,8 @@
       press(card)
       card.classList.add("is-on")
       const detail = $("[data-detail]", scene)
+      // En un teléfono la ficha no cabe al lado: se abre encima de la lista, como en la app.
+      detail.classList.add("is-open")
       detail.innerHTML = `<div class="sc-dhead"><b class="face" style="--c:#ecbaf6">O</b><div><strong>Onne Studio</strong><em>${esc(cl[0][2])}</em></div></div>
         <p class="sc-dk">${esc(t("s4.contact"))}</p>
         <p class="sc-dline">Mateo Ruiz · mateo@onne.co</p><p class="sc-dline">+57 300 412 8890</p>
@@ -493,14 +495,25 @@
         const mine = cards.filter(c => c[0] === ci)
         return `<div class="sc-col"><p><span>${esc(cols[ci])}</span><em>${mine.length}</em></p>${mine.map(c => `<div class="sc-card" style="--edge:#bd7dca"><span>${esc(c[1])}</span></div>`).join("")}</div>`
       }).join("")}</div>`
-      const tiles = files.slice(0, 3).map((f, i) => `<span class="sc-ftile">${i === 2 ? '<b class="pdf-badge">PDF</b>' : '<i class="folder folder--rose"></i>'}<small>${esc(f)}</small></span>`).join("")
+      const tiles = files.map((f, i) => `<span class="sc-ftile">${i === 2 ? '<b class="pdf-badge">PDF</b>' : `<i class="folder folder--${i === 3 ? "lemon" : "rose"}"></i>`}<small>${esc(f)}</small></span>`).join("")
+      // Como el proyecto de la app: el tablero arriba y debajo, lado a lado, los comentarios y los
+      // recursos. En un teléfono esos dos asoman abajo en una hoja con sus pestañas, y la hoja sube.
+      const below = (extra = "") => `<div class="sc-below" data-below>
+          <div class="sc-tabs"><span class="is-on">${esc(t("s6.res"))} <b>${files.length}</b></span><span>${esc(t("s6.com"))} <b>${t("s6.thread").length}</b></span></div>
+          <div class="sc-thread"><p class="sc-label">${esc(t("s6.com"))}</p>${t("s6.thread").map(([w, txt]) => `<div class="sc-msg">${face(w)}<span>${esc(txt)}</span></div>`).join("")}</div>
+          <div class="sc-files"><p class="sc-label">${esc(t("s6.res"))}</p><div class="sc-ftiles">${tiles}</div>${extra}</div>
+        </div>`
+      const sheetUp = on => $("[data-below]", scene)?.classList.toggle("is-up", on)
       stage(`<p class="sc-crumb">${esc(t("s6.crumb"))}</p>
         <div class="sc-head"><i class="folder folder--rose"></i><h4>${esc(t("s6.title"))}</h4><span class="sc-tools"><b class="sc-tool" data-share>${ICON("share")}</b><b class="sc-tool">${ICON("pencil")}</b></span></div>
-        <div class="sc-desk2">${board()}<div class="sc-files"><p class="sc-label">${esc(t("s6.material"))}</p><div class="sc-ftiles">${tiles}<span class="sc-ftile"><i class="folder folder--lemon"></i><small>${esc(files[3])}</small></span></div></div></div>`)
-      await at(500)
+        <div class="sc-pdesk">${board()}${below()}</div>`)
+      await at(200)
+      sheetUp(true)
       const share = $("[data-share]", scene)
-      cursorTo(share, 1)
-      await at(1400)
+      await at(950)
+      sheetUp(false)
+      cursorTo(share, .55)
+      await at(1550)
       press(share)
       const sheet = el(`<div class="sc-sheet"><h5>${esc(t("s6.sheet"))}</h5>
         <ul class="sc-sees">${t("s6.sees").map(([txt, on]) => `<li class="${on ? "is-on" : ""}"><i>${ICON("check")}</i>${esc(txt)}</li>`).join("")}</ul>
@@ -528,8 +541,9 @@
       publicView(true, "app.beevo.co/p/k3F9xQ")
       stage(`<span class="sc-badge">${esc(t("s6.client"))}</span>
         <div class="sc-pub"><p>${esc(t("s6.by"))}</p><h4><i class="folder folder--rose"></i>${esc(t("s6.title"))}</h4></div>
-        <div class="sc-desk2">${board()}<div class="sc-files"><p class="sc-label">${esc(t("s6.material"))}</p><div class="sc-ftiles">${tiles}</div>
-          <p class="sc-label" style="margin-top:1em">${esc(t("s6.invoices"))}</p><div class="sc-owed"><small>${esc(t("s6.inv"))}</small><b>${money(2400000)}</b></div></div></div>`)
+        <div class="sc-pdesk">${board()}${below(`<div class="sc-owed sc-owed--files"><small>${esc(t("s6.invoices"))} · ${esc(t("s6.inv"))}</small><b>${money(2400000)}</b></div>`)}</div>`)
+      await at(6900)
+      sheetUp(true)
     }
 
     // Cobros: Beevo deja lista la cuenta de cobro del mes y tú decides. Se envía y el cliente la descarga.

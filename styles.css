@@ -758,10 +758,18 @@ a.chip--mint:hover { background: #b4f7c3; }
 .sc-tool { display: grid; place-items: center; width: 2.3em; height: 2.3em; border-radius: .6em; background: var(--sunken); color: var(--ink-strong); transition: background .3s ease, color .3s ease; }
 .sc-tool .i { width: 1em; height: 1em; }
 .sc-tool.is-on { background: var(--mint); color: var(--mint-900); }
-.sc-desk2 { flex: 1; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: .8em; min-height: 0; }
-.sc-files { padding: .9em; border-radius: 1em; background: var(--sunken); min-height: 0; overflow: hidden; }
-.sc-ftiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45em; }
-.sc-ftile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .45em; height: 5em; border-radius: .7em; background: #fff; }
+/* Como el proyecto de la app: el tablero arriba y debajo, lado a lado, los comentarios y los recursos. */
+.sc-pdesk { flex: 1; display: flex; flex-direction: column; gap: .7em; min-height: 0; }
+.sc-pdesk > .sc-board { min-height: 0; }
+.sc-below { flex: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: .7em; }
+.sc-tabs { display: none; }
+.sc-thread, .sc-files { padding: .8em .9em .9em; border-radius: 1em; background: var(--sunken); min-height: 0; overflow: hidden; }
+.sc-msg { display: flex; align-items: flex-start; gap: .5em; margin-top: .45em; font-size: .8em; line-height: 1.35; color: var(--ink-strong); }
+.sc-msg .face { font-size: .8em; }
+.sc-msg span { padding: .4em .65em; border-radius: .2em .8em .8em .8em; background: #fff; }
+.sc-ftiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .45em; }
+.sc-ftile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .45em; height: 4.6em; border-radius: .7em; background: #fff; }
+.sc-owed--files { margin-top: .5em; }
 .sc-ftile small { font-size: .72em; color: var(--muted); }
 .sc-sheet { position: absolute; z-index: 7; top: 3.4em; right: 1.4em; width: 22em; padding: 1.1em 1.2em 1.2em; border-radius: 1.1em; background: #fff; box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .35), 0 2px 8px rgba(0, 0, 0, .06); }
 .sc-sheet h5 { font-family: var(--sans); font-weight: 300; font-size: 1em; color: var(--ink-strong); margin: 0 0 .8em; }
@@ -1085,18 +1093,45 @@ a.chip--mint:hover { background: #b4f7c3; }
   /* Aquí la mascota asoma justo debajo del titular: al subir para saltar no lo puede tapar. */
   .product .head { margin-bottom: calc(var(--hero-blob) * 1.06 + 1rem); }
   .ai { margin-inline: .5rem; }
+  /* La tarjeta de la demo va al mismo canto que el panel de Beevo AI: dentro del marco quedaba
+     16 px más adentro y no casaban. */
+  .tour-track { width: calc(100% - 1rem); padding-inline: 0; }
+  /* Y las pestañas ruedan hasta el canto de la tarjeta, no hasta su relleno, que las cortaba antes. */
+  .steps__list { margin-inline: -.7rem; padding-inline: .7rem; scroll-padding-inline: .7rem; }
   .win__app { grid-template-columns: minmax(0, 1fr); }
   .win__rail, .win__kbd { display: none; }
   .win__chrome { grid-template-columns: auto 1fr; gap: 1em; }
   .win__url { justify-self: center; translate: -1.5em 0; }
   .win__scene { padding: 3.6em .9em .9em; }
-  .sc-crm { grid-template-columns: 1fr; }
-  .sc-detail { display: none; }
+  /* La ficha del cliente no cabe al lado: se abre encima de la lista al tocarlo, como en la app. */
+  .sc-crm { position: relative; grid-template-columns: 1fr; }
+  .sc-detail { position: absolute; inset: 0; z-index: 3; opacity: 0; translate: 1.5em 0; pointer-events: none; transition: opacity .4s ease, translate .55s var(--ease); }
+  .sc-detail.is-open { opacity: 1; translate: 0 0; }
   .sc-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sc-board:not(.sc-board--4) .sc-col:nth-child(3) { display: none; }
   .sc-board--4 .sc-col:nth-child(1), .sc-board--4 .sc-col:nth-child(4) { display: none; }
-  .sc-desk2, .sc-invpage { grid-template-columns: 1fr; }
-  .sc-files, .sc-invpage .sc-desk { display: none; }
+  /* El proyecto, como en el teléfono: el tablero se queda la pantalla y los recursos y comentarios
+     asoman abajo en una hoja con sus pestañas, que sube para enseñarlos. */
+  .sc-pdesk { padding-bottom: 3em; }
+  .sc-below { position: absolute; left: .7em; right: .7em; bottom: 0; z-index: 4; display: block; padding: .5em .8em .9em; border-radius: 1.1em 1.1em 0 0; background: #fff; box-shadow: 0 -14px 30px -18px rgba(0, 0, 0, .4); translate: 0 calc(100% - 3.2em); transition: translate .65s var(--ease); }
+  .sc-below::before { content: ""; display: block; width: 2.4em; height: .3em; margin: 0 auto .45em; border-radius: 99px; background: var(--bone-300); }
+  .sc-below.is-up { translate: 0 0; }
+  .sc-tabs { display: flex; gap: .4em; margin-bottom: .7em; }
+  .sc-tabs span { display: inline-flex; align-items: center; gap: .4em; padding: .35em .75em; border-radius: .6em; background: var(--sunken); font-size: .82em; color: var(--muted); }
+  .sc-tabs span.is-on { background: var(--mint); color: var(--mint-900); }
+  .sc-tabs b { font-weight: 300; opacity: .7; }
+  .sc-thread { display: none; }
+  .sc-files { padding: 0; background: none; }
+  .sc-files .sc-label { display: none; }
+  /* La cuenta de cobro: el papel arriba y, debajo, lo que se decide con él. */
+  .sc-invpage { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: .6em; }
+  .sc-invpage .sc-desk { padding: .6em; }
+  .sc-invpage .sc-paper--big { max-width: 19em; font-size: .72em; }
+  .sc-rail { gap: .55em; padding: .7em; }
+  .sc-repeat { display: none; }
+  .sc-railbody { flex-direction: row; flex-wrap: wrap; align-items: center; padding: .6em; }
+  .sc-railt { flex-basis: 100%; margin: 0; }
+  .sc-railbody .sc-railbtn { flex: 1 1 auto; width: auto; }
   .sc-sheet { left: .8em; right: .8em; width: auto; }
   /* En un teléfono no hay sitio para los dos: con el menú abierto, la barra se aparta. */
   .nav__in-btn { display: none; }
