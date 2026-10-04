@@ -87,14 +87,17 @@ Arriba de `main.js`:
 
 - **Colores: los seis del manual** y nada más. El fondo y su brillo van en pareja (menta con
   lavanda, lavanda con menta, amarillo con rosa, rosa con amarillo); los grises salen del casi negro.
-- **Tipografía**: la página en la Neulis de la marca (`Neulis-Light.otf`, la de las letras de gancho,
-  como la lista de espera); lo que imita al producto —la demo, el notch— en la de letras de siempre
-  (`NeulisAlt-Light.otf`). Los titulares en Fraunces.
+- **Tipografía**: Neulis Light, la de letras de siempre (`NeulisAlt-Light.otf`), para todo el texto, y
+  Fraunces Soft (eje SOFT al máximo): en peso 400 en los titulares y en Light en lo demás. Fueron la Neulis de las
+  letras de gancho y una Fraunces de peso medio.
 - **El isotipo no gira** ni se deforma: el cursor y la cortina lo mueven y lo escalan, nada más.
 - **Textos**: para Colombia y España a la vez. Nada de «brief» ni «iguala»: se dice PDF y cuentas de
   cobro. Las cifras de fuera llevan su fuente al lado; no se inventa ninguna.
-- **Movimiento**: GSAP + ScrollTrigger y Lenis, vendorizados en `assets/vendor`. El único pin es el
-  del recorrido del producto.
+- **Movimiento**: GSAP + ScrollTrigger y Lenis, vendorizados en `assets/vendor`. El recorrido del
+  producto no usa el pin de GSAP: la tarjeta va con `position: sticky` dentro de una pista tan alta como
+  el recorrido. Con el pin, en un teléfono el scroll nativo le ganaba un fotograma y la tarjeta se
+  pasaba de largo, volvía de golpe y al final se soltaba con otro salto. Y el ajuste de secciones solo
+  actúa con rueda o trackpad: con el dedo se sentía como un tirón hacia atrás.
 - **Precios**: copiados de `Billing::Plan`. La moneda la decide el país, con la regla del Rails
   (`https://app.beevo.co/precios/moneda`, y si no contesta, se adivina en el navegador).
 

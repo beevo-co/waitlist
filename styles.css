@@ -4,12 +4,12 @@
    la cara de la lista de espera: el fondo en los rellenos del manual y su grano, el brillo detrás
    del titular, los titulares en Fraunces con la palabra sobre el trazo de marcador, las píldoras y el
    isotipo que sigue al puntero. La navegación es el notch.
-   La página va en la Neulis de la marca (la de las letras de gancho, como la lista de espera); lo
-   que imita al producto —la demo, el notch— va en la de letras de siempre, como el producto.
+   Las letras son Neulis Light, la de letras de siempre (el fichero `NeulisAlt-Light.otf`), y Fraunces
+   Soft Light (peso 300 y el eje SOFT al máximo) para titulares y frases. Fueron la Neulis de las letras
+   de gancho y una Fraunces de peso medio, y se leían pesadas y raras.
    ─────────────────────────────────────────────────────────── */
 
 @font-face { font-family: "Neulis"; src: url("assets/fonts/NeulisAlt-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
-@font-face { font-family: "Neulis Brand"; src: url("assets/fonts/Neulis-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
 @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
 
 @property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
@@ -34,7 +34,7 @@
   --ink-strong: #464646;
 
   --sans: "Neulis", "Quicksand", ui-rounded, system-ui, sans-serif;
-  --brand: "Neulis Brand", "Neulis", "Quicksand", ui-rounded, system-ui, sans-serif;
+  --brand: var(--sans);
   --display: "Fraunces", Georgia, serif;
   --serif: "Fraunces", Georgia, serif;
 
@@ -99,8 +99,9 @@ ul, ol { padding: 0; list-style: none; }
    palabras, y lo que importa sobre un trazo de marcador del color del brillo. */
 .display, .h2 {
   font-family: var(--display);
-  font-weight: 500;
-  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 0;
+  /* Los titulares en negrita, con el mismo eje SOFT al máximo: lo demás de Fraunces va en Light. */
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0;
   line-height: 1.02;
   letter-spacing: -.03em;
   word-spacing: .1em;
@@ -112,7 +113,7 @@ ul, ol { padding: 0; list-style: none; }
 .h2--xl { font-size: clamp(2.3rem, 4.8vw, 4.6rem); }
 .line { display: block; }
 /* La respuesta, con el eje WONK encendido: las mismas letras con un punto de guasa. */
-.line--wink { font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; }
+.line--wink { font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; }
 .hl { position: relative; z-index: 0; white-space: nowrap; }
 /* En la portada el titular va sobre el brillo, que es del color emparejado con el fondo: ahí el trazo
    va del color del fondo, que es el que contrasta. En el resto de la página va del color del brillo. */
@@ -491,7 +492,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 .nlink:hover, .nlink:focus-visible { background: var(--sunken); }
 .nlink__ic { grid-row: span 2; display: grid; place-items: center; width: 2.6em; height: 2.6em; border-radius: .8em; background: var(--c); color: var(--ink); }
 .nlink__ic .i { width: 1.15em; height: 1.15em; }
-.nlink__t { align-self: end; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.22em; line-height: 1.15; letter-spacing: -.015em; color: var(--ink); }
+.nlink__t { align-self: end; font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.22em; line-height: 1.15; letter-spacing: -.015em; color: var(--ink); }
 .nlink__d { align-self: start; font-size: .84em; line-height: 1.35; color: var(--muted); }
 .nlink .arw { grid-row: 1 / span 2; grid-column: 3; width: .7em; height: .7em; color: var(--muted); }
 .notch__menu-cta { display: flex; gap: .45em; margin: .65em .3em 0; }
@@ -568,7 +569,7 @@ a.chip--mint:hover { background: #b4f7c3; }
    de tinta al ritmo del scroll (`setupFill`); sin JavaScript, o con «menos movimiento», se lee entera. */
 .why { padding: clamp(6rem, 18vh, 11rem) 0 clamp(5rem, 14vh, 9rem); }
 .why__in { display: grid; justify-items: center; text-align: center; }
-.why__t { max-width: 17em; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 0; font-size: clamp(2.1rem, 4.6vw, 4.3rem); line-height: 1.08; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink); text-wrap: balance; }
+.why__t { max-width: 17em; font-family: var(--display); font-weight: 400; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: clamp(2.1rem, 4.6vw, 4.3rem); line-height: 1.08; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink); text-wrap: balance; }
 .why__t.is-filling .fw { opacity: .16; }
 .why__src { margin-top: clamp(1.6rem, 4vh, 2.4rem); font-size: .8rem; color: var(--soft); }
 .why__src a { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: .2em; transition: text-decoration-color .2s ease; }
@@ -580,8 +581,13 @@ a.chip--mint:hover { background: #b4f7c3; }
 .product { padding: clamp(4rem, 10vh, 6.5rem) 0 clamp(4rem, 9vh, 6rem); }
 .product .head { max-width: min(38rem, 58%); margin-bottom: calc(var(--hero-blob) * .66 + 1.5rem); }
 .product { --hero-blob: clamp(6.5rem, 9.5vw, 9rem); }
+/* La tarjeta se queda pegada arriba con `position: sticky` dentro de su pista, que mide lo que dura el
+   recorrido (la pone main.js). Fue un pin de GSAP, y en un teléfono el scroll nativo le ganaba un
+   fotograma: la tarjeta se pasaba de largo, volvía de golpe a su sitio y al final se soltaba con otro
+   salto. Lo pegado lo mueve el propio navegador, sin ese retraso. */
 .tour {
-  position: relative;
+  position: sticky;
+  top: var(--pin-top, 5rem);
   display: grid;
   grid-template-columns: minmax(15rem, 21rem) minmax(0, 1fr);
   gap: .7rem;
@@ -605,7 +611,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 .step__bar { grid-row: 1 / span 3; position: relative; overflow: hidden; border-radius: 2px; background: color-mix(in srgb, var(--ink) 12%, transparent); }
 .step__bar i { position: absolute; inset: 0; background: var(--ink); transform-origin: top; scale: 1 var(--p, 0); }
 .step__k { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
-.step__t { margin-top: .25rem; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.16rem; line-height: 1.2; letter-spacing: -.01em; color: color-mix(in srgb, var(--ink) 55%, transparent); transition: color .4s ease; }
+.step__t { margin-top: .25rem; font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.16rem; line-height: 1.2; letter-spacing: -.01em; color: color-mix(in srgb, var(--ink) 55%, transparent); transition: color .4s ease; }
 .step:hover .step__t { color: var(--soft); }
 .step.is-on .step__t { color: var(--ink); }
 .step__b { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .55s var(--ease), opacity .4s ease, margin .55s var(--ease); }
@@ -624,7 +630,9 @@ a.chip--mint:hover { background: #b4f7c3; }
   width: var(--hero-blob);
   height: var(--hero-blob);
   margin-left: calc(var(--hero-blob) / -2);
-  clip-path: inset(0 0 34% 0);
+  /* Recortado solo por abajo, que es por donde asoma: con los lados y arriba en 0, al respirar o
+     saltar se ensancha y se le veía el canto plano. */
+  clip-path: inset(-40% -40% 34% -40%);
   transform-origin: 50% 50%;
   will-change: transform;
 }
@@ -864,8 +872,8 @@ a.chip--mint:hover { background: #b4f7c3; }
    lo tuyo en Fraunces y en menta. Partido en cualquier sitio se leía «encarga de / la gestión». */
 .ai__title {
   font-family: var(--display);
-  font-weight: 500;
-  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 0;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0;
   font-size: clamp(2rem, min(3.7vw, 6.4vh), 3.5rem);
   line-height: 1.02;
   letter-spacing: -.03em;
@@ -875,7 +883,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 }
 .ai__hl {
   display: block;
-  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0;
   white-space: nowrap;
   color: var(--mint);
 }
@@ -934,7 +942,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 /* Hazlo tuyo: el dock a los pies de Beevo, como el de un Mac. El que está puesto es más grande y lleva
    su punto debajo; el nombre sale encima al pasar. Elegir uno viste al del centro y al del notch. */
 .dock { position: relative; z-index: 2; display: flex; align-items: center; gap: .9rem; margin-top: clamp(.4rem, 1.4vh, 1rem); padding: .35rem .45rem .35rem 1.2rem; border-radius: 99px; background: rgba(255, 255, 255, .08); }
-.dock__t { font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; font-size: 1.12rem; letter-spacing: -.01em; white-space: nowrap; color: var(--cream); }
+.dock__t { font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: 1.12rem; letter-spacing: -.01em; white-space: nowrap; color: var(--cream); }
 .dock__row { display: flex; align-items: center; gap: .15rem; }
 .dock__one { position: relative; display: grid; place-items: center; width: 2.85rem; height: 2.85rem; border-radius: 50%; transition: background .3s ease; }
 .dock__one:hover { background: rgba(255, 255, 255, .08); }
@@ -965,10 +973,10 @@ a.chip--mint:hover { background: #b4f7c3; }
 .plan--team .plan__list li::before { border-color: var(--mint); }
 .plan--team .btn--ink { background: var(--mint); color: var(--ink); --rise: var(--cream); }
 .plan__badge { position: absolute; top: 1.5rem; right: 1.5rem; font-size: .72rem; letter-spacing: .04em; padding: .3rem .7rem; border-radius: 99px; background: var(--glow); color: var(--ink); transition: background-color var(--shift) var(--ease-soft); }
-.plan__name { font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.55rem; letter-spacing: -.02em; color: var(--ink); }
+.plan__name { font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.55rem; letter-spacing: -.02em; color: var(--ink); }
 .plan__who { margin-top: .2rem; font-size: .95rem; color: var(--soft); }
 .plan__price { display: flex; align-items: baseline; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
-.plan__price b { font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: clamp(2.3rem, 3.3vw, 2.9rem); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; transition: opacity .2s ease, translate .25s var(--ease), filter .25s ease; }
+.plan__price b { font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: clamp(2.3rem, 3.3vw, 2.9rem); letter-spacing: -.03em; color: var(--ink); font-variant-numeric: tabular-nums; transition: opacity .2s ease, translate .25s var(--ease), filter .25s ease; }
 .plan__price b.is-swapping { opacity: 0; translate: 0 .3em; filter: blur(4px); }
 .plan__price span { font-size: .85rem; color: var(--soft); }
 .plan__fine { min-height: 2.6em; margin: .3rem 0 1.3rem; font-size: .82rem; color: var(--soft); }
@@ -1004,7 +1012,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 .cta__side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; padding-top: 5rem; }
 .cta__tile { padding: 1.5rem 1.5rem 1.6rem; border-radius: 1.75rem; background: color-mix(in srgb, #fff 55%, transparent); }
 .cta__tile p { font-size: .98rem; line-height: 1.5; color: var(--soft); }
-.cta__tile b { display: block; margin-bottom: .3rem; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); }
+.cta__tile b { display: block; margin-bottom: .3rem; font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); }
 .cta__tile .tile__ic { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin-bottom: 1.1rem; border-radius: 50%; background: var(--ink); color: var(--cream); }
 .cta__tile .btn { margin-top: 1.1rem; }
 
@@ -1014,7 +1022,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 .foot__logo { height: 1.6rem; width: auto; }
 .foot__tag { margin-top: .9rem; max-width: 16rem; color: var(--soft); }
 .foot__col { display: flex; flex-direction: column; gap: .55rem; font-size: .92rem; }
-.foot__col p { margin-bottom: .3rem; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.05rem; color: var(--ink); }
+.foot__col p { margin-bottom: .3rem; font-family: var(--display); font-weight: 300; font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.05rem; color: var(--ink); }
 .foot__col a { color: var(--soft); transition: color .2s ease; }
 .foot__col a:hover { color: var(--ink); }
 .foot__base { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-top: 1.4rem; font-size: .84rem; color: var(--soft); }
@@ -1050,7 +1058,7 @@ a.chip--mint:hover { background: #b4f7c3; }
   .step__k { font-size: .82rem; letter-spacing: .02em; text-transform: none; color: var(--soft); white-space: nowrap; }
   .step.is-on .step__k { color: var(--ink); }
   .steps__cap { display: block; min-height: 5.6em; margin: .85rem .4rem .1rem; text-align: center; }
-  .steps__cap b { display: block; font-weight: 500; font-family: var(--display); font-variation-settings: "opsz" 144, "SOFT" 60; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); }
+  .steps__cap b { display: block; font-weight: 300; font-family: var(--display); font-variation-settings: "opsz" 144, "SOFT" 100; font-size: 1.25rem; letter-spacing: -.01em; color: var(--ink); }
   .steps__cap span { display: block; margin-top: .25rem; font-size: .92rem; line-height: 1.45; color: var(--soft); }
   .steps__cta { display: none; }
   .product .head { max-width: 38rem; }

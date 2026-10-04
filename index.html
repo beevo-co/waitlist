@@ -14,7 +14,6 @@
 <link rel="alternate" hreflang="es" href="https://beevo.co/?lang=es">
 <link rel="alternate" hreflang="en" href="https://beevo.co/?lang=en">
 <link rel="alternate" hreflang="x-default" href="https://beevo.co/">
-<link rel="preload" href="assets/fonts/Neulis-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assets/fonts/Fraunces.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="assets/vendor/lenis.css">
@@ -152,7 +151,9 @@
         <p class="sub" data-reveal data-i18n="pf.b">Clientes, equipo, proyectos y cobros que trabajan juntos. Baja y míralo funcionar.</p>
       </header>
     </div>
-    <div class="wrap">
+    <!-- La pista: tan alta como el recorrido. La tarjeta va pegada arriba dentro de ella (sticky) mientras
+         se baja, y cada tramo es una escena. -->
+    <div class="wrap tour-track" data-tour-track>
       <div class="tour" data-tour data-snap="pin">
         <div class="steps" data-steps>
           <ol class="steps__list" role="tablist" aria-label="Lo que hace Beevo" data-i18n-aria="tour.aria">

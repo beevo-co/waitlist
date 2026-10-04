@@ -136,6 +136,8 @@
 
   /* ── Scroll suave ── */
   let lenis = null
+  // La barra del navegador del teléfono cambia el alto al bajar: medir otra vez por eso movía todo.
+  ScrollTrigger.config({ ignoreMobileResize: true })
   if ("scrollRestoration" in history) history.scrollRestoration = "manual"
   scrollTo(0, 0)
   if (!reduced) {
@@ -664,13 +666,23 @@
   let tourJump = null
   const tourEl = $("[data-tour]")
   const pinTop = () => Math.round(nav.offsetHeight + (narrow() ? 8 : 14))
+  const track = $("[data-tour-track]")
+  let tourST = null
   function setupTour() {
     const N = $$("[data-tab]").length
     let step = 0
-    const st = ScrollTrigger.create({
-      trigger: tourEl, pin: true, invalidateOnRefresh: true,
+    // La pista mide la tarjeta más un tramo de scroll por escena; la tarjeta va pegada dentro.
+    const size = () => {
+      track.style.setProperty("--pin-top", `${pinTop()}px`)
+      tourEl.style.setProperty("--pin-top", `${pinTop()}px`)
+      track.style.height = `${tourEl.offsetHeight + Math.round(innerHeight * .62 * N)}px`
+    }
+    size()
+    ScrollTrigger.addEventListener("refreshInit", size)
+    const st = tourST = ScrollTrigger.create({
+      trigger: track, invalidateOnRefresh: true,
       start: () => `top ${pinTop()}px`,
-      end: () => `+=${Math.round(innerHeight * .62 * N)}`,
+      end: () => `bottom ${pinTop() + tourEl.offsetHeight}px`,
       onUpdate: s => {
         const f = s.progress * N, i = clamp(Math.floor(f), 0, N - 1)
         if (i !== step) { step = i; Demo.select(i) }
@@ -708,7 +720,7 @@
       const fr = frame.getBoundingClientRect()
       clip = clamp((y + S * s / 2 - fr.top) / (S * s), 0, 1) * 100
     }
-    heroBlob.style.clipPath = `inset(0 0 ${clip.toFixed(2)}% 0)`
+    heroBlob.style.clipPath = `inset(-40% -40% ${clip.toFixed(2)}% -40%)`
     const now = flight >= .995
     heroBlob.style.opacity = now ? 0 : 1
     if (now !== landed) {
@@ -840,7 +852,9 @@
      lo interrumpe, sigue la dirección en la que se iba y hacia atrás solo corrige pasarse un poco.
      Dentro del recorrido de la demo no hace nada: ahí la tarjeta ya está quieta y entera. */
   function setupSettle() {
-    if (!lenis) return
+    // Con el dedo el scroll es el del teléfono, con su inercia: corregirlo al soltar se sentía como
+    // un tirón hacia atrás. Solo con rueda o trackpad.
+    if (!lenis || !fine) return
     const targets = $$("[data-snap]")
     let timer = 0, dir = 1
     lenis.on("scroll", l => {
@@ -852,7 +866,7 @@
     function settle() {
       if (lenis.isScrolling || lenis.isStopped) return
       const y = lenis.scroll, vh = innerHeight, top = nav.offsetHeight, room = vh - top
-      if (ScrollTrigger.getAll().some(st => st.pin && y > st.start + 2 && y < st.end - 2)) return
+      if (tourST && y > tourST.start + 2 && y < tourST.end - 2) return
       let best = null
       for (const el of targets) {
         const r = el.getBoundingClientRect()
