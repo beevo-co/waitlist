@@ -572,6 +572,9 @@ a.chip--mint:hover { background: #b4f7c3; }
 .why__in { display: grid; justify-items: center; text-align: center; }
 .why__t { max-width: 17em; font-family: var(--display); font-weight: 400; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: clamp(2.1rem, 4.6vw, 4.3rem); line-height: 1.08; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink); text-wrap: balance; }
 .why__t.is-filling .fw { opacity: .16; }
+/* Fija mientras se llena: la sección da el recorrido y lo de dentro se queda en el centro. */
+.why.is-pinned { height: 260svh; padding: 0; }
+.why.is-pinned .why__in { position: sticky; top: 0; min-height: 100svh; align-content: center; padding-block: calc(var(--nav-h) + 1rem) 2rem; }
 .why__src { margin-top: clamp(1.6rem, 4vh, 2.4rem); font-size: .8rem; color: var(--soft); }
 .why__src a { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: .2em; transition: text-decoration-color .2s ease; }
 .why__src a:hover { text-decoration-color: var(--ink); }

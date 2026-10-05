@@ -681,7 +681,7 @@
   const tourEl = $("[data-tour]")
   const pinTop = () => Math.round(nav.offsetHeight + (narrow() ? 8 : 14))
   const track = $("[data-tour-track]")
-  let tourST = null
+  let tourST = null, whyST = null
   function setupTour() {
     const N = $$("[data-tab]").length
     let step = 0
@@ -881,6 +881,7 @@
       if (lenis.isScrolling || lenis.isStopped) return
       const y = lenis.scroll, vh = innerHeight, top = nav.offsetHeight, room = vh - top
       if (tourST && y > tourST.start + 2 && y < tourST.end - 2) return
+      if (whyST && y > whyST.start + 2 && y < whyST.end - 2) return
       let best = null
       for (const el of targets) {
         const r = el.getBoundingClientRect()
@@ -1157,7 +1158,15 @@
         const first = words.indexOf($(".fw", hl))
         tl.to(hl, { "--hl": 1, duration: 1.2 }, first * .18 + .2)
       }
-      ScrollTrigger.create({ trigger: el, start: "top 80%", end: "bottom 42%", scrub: .5, animation: tl })
+      // La frase del porqué se queda quieta en el centro mientras se llena: su sección mide más que
+      // la pantalla y lo de dentro va pegado (sticky), como la demo. Lo último se llena antes del
+      // final, para que la frase entera se lea un momento antes de soltarse.
+      const pin = el.closest(".why")
+      if (pin) {
+        pin.classList.add("is-pinned")
+        tl.to({}, { duration: tl.duration() * .25 })
+        whyST = ScrollTrigger.create({ trigger: pin, start: "top top", end: "bottom bottom", scrub: .5, animation: tl })
+      } else ScrollTrigger.create({ trigger: el, start: "top 80%", end: "bottom 42%", scrub: .5, animation: tl })
     })
   }
 
