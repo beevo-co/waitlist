@@ -1079,14 +1079,28 @@
   function wrapWords(node) {
     ;[...node.childNodes].forEach(n => {
       if (n.nodeType === 3) {
+        const prev = n.previousSibling
         const frag = document.createDocumentFragment()
-        n.textContent.split(/(\s+)/).forEach(p => {
+        n.textContent.split(/(\s+)/).forEach((p, k) => {
           if (!p) return
           if (/^\s+$/.test(p)) return frag.append(" ")
           const o = document.createElement("span"), i = document.createElement("span")
           o.className = "wd"
           i.textContent = p
           o.append(i)
+          // Lo que va pegado a la palabra de antes —el punto detrás de «frecuentes»— va con ella en un
+          // mismo bloque sin cortes: cada palabra es su caja, y Safari partía la línea entre las dos
+          // cajas y dejaba el punto solo en un renglón, como una viñeta.
+          // Se pega a la última palabra, no al bloque entero: «que odian los CRM» sin cortes no cabría
+          // en un teléfono. Un resaltado sí va entero, que lleva el trazo.
+          if (k === 0 && prev?.nodeType === 1) {
+            const last = prev.classList.contains("hl") ? prev : [...prev.querySelectorAll(".wd")].pop() || prev
+            const glue = document.createElement("span")
+            glue.className = "nw"
+            last.replaceWith(glue)
+            glue.append(last, o)
+            return
+          }
           frag.append(o)
         })
         n.replaceWith(frag)
