@@ -118,6 +118,8 @@ ul, ol { padding: 0; list-style: none; }
 /* En la portada el titular va sobre el brillo, que es del color emparejado con el fondo: ahí el trazo
    va del color del fondo, que es el que contrasta. En el resto de la página va del color del brillo. */
 .hero .hl::before { background: var(--page-bg); }
+/* Los botones del hero se llenan del color del fondo, como el trazo: el del brillo no se ve encima de él. */
+.hero__cta .btn { --rise: var(--page-bg); }
 .hl::before {
   content: "";
   position: absolute;
