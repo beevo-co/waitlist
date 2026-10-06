@@ -23,7 +23,6 @@
     "hero.cta": "Try it free",
     "hero.demo": "See it work",
     "hero.note": "7-day free trial · Cancel anytime",
-    "hero.card": "We ask for a card, but you won't be charged until day 8.",
     "hero.chip.trial": "7 days free",
     "hero.chip.cancel": "Cancel anytime",
     "hero.chip.ai": "AI included",
