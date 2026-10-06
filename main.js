@@ -66,6 +66,12 @@
     })
     originalAria.forEach((es, node) => node.setAttribute("aria-label", lang === "es" ? es : (I18N.en[node.dataset.i18nAria] ?? es)))
     originalLabel.forEach((es, node) => { node.dataset.label = lang === "es" ? es : (I18N.en[node.dataset.i18nLabel] ?? es) })
+    // La captura del producto, la del idioma de quien mira.
+    if (lang === "en") $$("[data-i18n-alt]").forEach(img => {
+      img.alt = I18N.en[img.dataset.i18nAlt] ?? img.alt
+      img.srcset = img.srcset.replaceAll("-es", "-en")
+      img.src = img.src.replace("-es", "-en")
+    })
     document.title = t("meta.title")
     $('meta[name="description"]')?.setAttribute("content", t("meta.desc"))
     $$("[data-privacy]").forEach(a => a.setAttribute("href", t("privacy")))
@@ -681,7 +687,7 @@
   const tourEl = $("[data-tour]")
   const pinTop = () => Math.round(nav.offsetHeight + (narrow() ? 8 : 14))
   const track = $("[data-tour-track]")
-  let tourST = null, whyST = null
+  let tourST = null
   function setupTour() {
     const N = $$("[data-tab]").length
     let step = 0
@@ -881,7 +887,6 @@
       if (lenis.isScrolling || lenis.isStopped) return
       const y = lenis.scroll, vh = innerHeight, top = nav.offsetHeight, room = vh - top
       if (tourST && y > tourST.start + 2 && y < tourST.end - 2) return
-      if (whyST && y > whyST.start + 2 && y < whyST.end - 2) return
       let best = null
       for (const el of targets) {
         const r = el.getBoundingClientRect()
@@ -1131,6 +1136,16 @@
   /* ── El porqué: las palabras se encienden al ritmo del scroll ──
      Nacen apagadas y se van llenando de tinta mientras se baja; el trazo de la cifra se dibuja cuando
      le llega su turno. Al subir se apagan otra vez. */
+  /* ── La captura del producto: asoma inclinada bajo el titular y se endereza al bajar ── */
+  function setupShot() {
+    const stage = $("[data-shot]")
+    if (!stage || reduced) return
+    gsap.fromTo(stage, { rotateX: 14, scale: .94, y: 0 }, {
+      rotateX: 0, scale: 1, ease: "none",
+      scrollTrigger: { trigger: stage, start: "top bottom", end: "top 18%", scrub: .4 }
+    })
+  }
+
   function setupFill() {
     $$("[data-fill]").forEach(el => {
       if (reduced) return
@@ -1158,15 +1173,7 @@
         const first = words.indexOf($(".fw", hl))
         tl.to(hl, { "--hl": 1, duration: 1.2 }, first * .18 + .2)
       }
-      // La frase del porqué se queda quieta en el centro mientras se llena: su sección mide más que
-      // la pantalla y lo de dentro va pegado (sticky), como la demo. Lo último se llena antes del
-      // final, para que la frase entera se lea un momento antes de soltarse.
-      const pin = el.closest(".why")
-      if (pin) {
-        pin.classList.add("is-pinned")
-        tl.to({}, { duration: tl.duration() * .25 })
-        whyST = ScrollTrigger.create({ trigger: pin, start: "top top", end: "bottom bottom", scrub: .5, animation: tl })
-      } else ScrollTrigger.create({ trigger: el, start: "top 80%", end: "bottom 42%", scrub: .5, animation: tl })
+      ScrollTrigger.create({ trigger: el, start: "top 80%", end: "bottom 42%", scrub: .5, animation: tl })
     })
   }
 
@@ -1279,6 +1286,7 @@
     setupTour()
     paintPrices(false)
     setupDarkNav()
+    setupShot()
     setupRise()
     setupFill()
     setupSettle()

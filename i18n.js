@@ -34,7 +34,10 @@
     "hero.d.l2": "a spreadsheet and twenty chats",
     "hero.d.lead": "Projects, clients and payments in one place. Made by creatives, for creatives.",
 
-    "why.t": "The average freelancer loses <span class=\"hl\">204 hours a year</span> to paperwork: more than five weeks of work. Beevo exists to give them back.",
+    "why.t": "Freelancers lose <span class=\"hl\">204 hours a year</span> to paperwork.",
+    "why.punch": "We're here to give them back.",
+    "shot.aria": "Inside Beevo",
+    "shot.alt": "Beevo home: sticky notes, pending tasks and your week",
     "why.src": "Source:",
 
     "pf.a": "Your whole studio, in <span class=\"hl\">one place</span>.",
