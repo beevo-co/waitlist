@@ -605,7 +605,9 @@ a.chip--mint:hover { background: #b4f7c3; }
 /* En un teléfono se ve entera, como en Simmmply: lo que dice es la forma de la app, no su letra. Con
    menos margen a los lados, para que mida lo más posible. */
 @media (max-width: 720px) {
-  .hero { min-height: 0; padding-bottom: 2.2rem; }
+  /* La primera pantalla es el hero y la captura asomando, como en escritorio: la frase de debajo
+     ya es de la segunda. */
+  .hero { --peek: min(26svh, 14rem); padding-bottom: 1.5rem; }
   .shot { padding: 0 .75rem 1rem; }
   .shot__frame { border-radius: 10px; }
 }
