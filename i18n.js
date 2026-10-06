@@ -33,6 +33,11 @@
     "hero.d.l1": "Your studio deserves better than",
     "hero.d.l2": "a spreadsheet and twenty chats",
     "hero.d.lead": "Projects, clients and payments in one place. Made by creatives, for creatives.",
+    "hero.chip.who": "For freelancers and agencies",
+    "hero.e.l1": "Stop making the same",
+    "hero.e.l2": "invoice",
+    "hero.e.l3": "every month",
+    "hero.e.lead": "Beevo drafts it for you when it's due, from your projects and rates. You review it and send it in one click.",
 
     "why.t": "Freelancers lose <span class=\"hl\">204 hours a year</span> to paperwork.",
     "why.punch": "We're here to give them back.",

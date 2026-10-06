@@ -20,7 +20,7 @@
 <script>
   (function () {
     var root = document.documentElement, asked = new URLSearchParams(location.search).get("hero")
-    root.dataset.hero = /^[abd]$/.test(asked || "") ? asked : "abd".charAt(Math.floor(Math.random() * 3))
+    root.dataset.hero = /^[abde]$/.test(asked || "") ? asked : "abde".charAt(Math.floor(Math.random() * 4))
     if (asked) root.dataset.heroForced = ""
     if (matchMedia("(pointer: coarse)").matches) root.classList.add("fast")
   })()
@@ -156,6 +156,16 @@
           <span class="line line--wink"><span class="hl" data-i18n="hero.d.l2">un Excel y veinte chats</span>.</span>
         </h1>
         <p class="lede" data-hero-in data-i18n="hero.d.lead">Proyectos, clientes y cobros en un solo sitio. Hecho por creativos, para creativos.</p>
+      </div>
+      <!-- E: el dolor primero —rehacer cada mes la misma cuenta de cobro— y lo que hace Beevo. Prepara
+           el borrador solo; emitirla y mandarla es de quien cobra, así que no se promete más. -->
+      <div class="hero__v" data-v="e">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.trial">7 días gratis</span><span class="chip" data-i18n="hero.chip.who">Para freelancers y agencias</span></p>
+        <h1 class="display hero__title hero__title--long" data-hero-title>
+          <span class="line" data-i18n="hero.e.l1">Deja de hacer cada mes</span>
+          <span class="line line--wink"><span data-i18n="hero.e.l2">la misma</span> <span class="hl" data-i18n="hero.e.l3">cuenta de cobro</span>.</span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.e.lead">Beevo la prepara sola cuando toca, con tus proyectos y tus tarifas. Tú la revisas y la mandas en un clic.</p>
       </div>
       <div class="hero__cta" data-hero-in>
         <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="hero.cta">Pruébalo gratis</span><i data-arw></i></a>

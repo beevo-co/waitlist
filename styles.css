@@ -574,9 +574,10 @@ a.chip--mint:hover { background: #b4f7c3; }
 .hero__v { display: contents; }
 .hero__v:not([data-v~="a"]),
 [data-hero="b"] .hero__v:not([data-v~="b"]),
-[data-hero="d"] .hero__v:not([data-v~="d"]) { display: none; }
-[data-hero="b"] .hero__v[data-v~="b"], [data-hero="d"] .hero__v[data-v~="d"] { display: contents; }
-[data-hero="b"] p.hero__v[data-v~="b"], [data-hero="d"] p.hero__v[data-v~="d"] { display: block; }
+[data-hero="d"] .hero__v:not([data-v~="d"]),
+[data-hero="e"] .hero__v:not([data-v~="e"]) { display: none; }
+[data-hero="b"] .hero__v[data-v~="b"], [data-hero="d"] .hero__v[data-v~="d"], [data-hero="e"] .hero__v[data-v~="e"] { display: contents; }
+[data-hero="b"] p.hero__v[data-v~="b"], [data-hero="d"] p.hero__v[data-v~="d"], [data-hero="e"] p.hero__v[data-v~="e"] { display: block; }
 .hero__title--long { font-size: clamp(2.2rem, 4.3vw, 4.5rem); }
 .hero__chips { justify-content: center; margin-bottom: clamp(1rem, 2.4vh, 1.5rem); font-size: clamp(.95rem, 1.1vw, 1.1rem); }
 .hero__chips .chip { background: color-mix(in srgb, #fff 58%, transparent); }
