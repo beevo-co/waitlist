@@ -585,14 +585,14 @@ a.chip--mint:hover { background: #b4f7c3; }
 
 /* ── El producto, de verdad ── La captura real, asomando bajo el titular. Detrás, un bloque del color
    del brillo que la sostiene; al bajar, la captura pasa de inclinada a derecha (`setupShot`). */
-.shot { position: relative; padding: 0 var(--pad) clamp(4rem, 10vh, 7rem); perspective: 1600px; }
+/* La captura y la frase de debajo son un solo bloque de color: redondo arriba (aquí) y abajo (`.why`). */
+.shot { --band: var(--rose); --band-r: clamp(28px, 5vw, 64px); position: relative; padding: 0 var(--pad) clamp(4rem, 10vh, 7rem); perspective: 1600px; }
 .shot::before {
   content: "";
   position: absolute;
-  inset: 34% 0 0;
-  border-radius: clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px) 0 0;
-  background: var(--glow);
-  transition: background-color var(--shift) var(--ease-soft);
+  inset: 34% 0 -1px;
+  border-radius: var(--band-r) var(--band-r) 0 0;
+  background: var(--band);
 }
 .shot__stage { position: relative; width: min(100%, 1180px); margin-inline: auto; transform-origin: 50% 0; }
 .shot__frame {
@@ -609,7 +609,7 @@ a.chip--mint:hover { background: #b4f7c3; }
 }
 
 /* ── El porqué ── Una frase corta y su respuesta, en un bloque de color y nada más. */
-.why { padding: clamp(5rem, 16vh, 9rem) 0; background: var(--rose); }
+.why { padding: clamp(3rem, 10vh, 6rem) 0 clamp(5rem, 16vh, 9rem); background: var(--rose); border-radius: 0 0 clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px); }
 .why__in { display: grid; justify-items: center; text-align: center; }
 .why__t { max-width: 15em; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: clamp(2.1rem, 4.8vw, 4.4rem); line-height: 1.06; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink-strong, var(--ink)); text-wrap: balance; }
 .why .hl::before { background: var(--lemon); }

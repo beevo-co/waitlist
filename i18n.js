@@ -40,7 +40,7 @@
     "shot.alt": "Beevo home: sticky notes, pending tasks and your week",
     "why.src": "Source:",
 
-    "pf.a": "Your whole studio, in <span class=\"hl\">one place</span>.",
+    "pf.a": "All your work, in <span class=\"hl\">one place</span>.",
     "pf.b": "Clients, team, projects and billing working together. Scroll and watch it run.",
     "tour.aria": "What Beevo does",
     "tour.k1": "Clients", "tour.t1": "Every client, with their story.", "tour.b1": "Contacts, projects and what they owe you, on one card. And Beevo tells you how it's going.",
