@@ -585,8 +585,8 @@ a.chip--mint:hover { background: #b4f7c3; }
 
 /* ── El producto, de verdad ── La captura real, asomando bajo el titular. Detrás, un bloque del color
    del brillo que la sostiene; al bajar, la captura pasa de inclinada a derecha (`setupShot`). */
-/* La captura y la frase de debajo son un solo bloque de color: redondo arriba (aquí) y abajo (`.why`). */
-.shot { --band: var(--rose); --band-r: clamp(28px, 5vw, 64px); position: relative; padding: 0 var(--pad) clamp(4rem, 10vh, 7rem); perspective: 1600px; }
+/* La captura y la frase de debajo son un solo bloque lila: redondo arriba (aquí) y abajo (`.why`). */
+.shot { --band: var(--lilac); --band-r: clamp(28px, 5vw, 64px); position: relative; padding: 0 var(--pad) clamp(4rem, 10vh, 7rem); perspective: 1600px; }
 .shot::before {
   content: "";
   position: absolute;
@@ -602,14 +602,16 @@ a.chip--mint:hover { background: #b4f7c3; }
   box-shadow: 0 40px 90px -40px color-mix(in srgb, var(--ink) 55%, transparent), 0 0 0 1px color-mix(in srgb, var(--ink) 8%, transparent);
 }
 .shot__frame img { display: block; width: 100%; height: auto; }
-/* En un teléfono la captura entera sería una miniatura ilegible: se ve su esquina, a tamaño de leer. */
+/* En un teléfono se ve entera, como en Simmmply: lo que dice es la forma de la app, no su letra. Con
+   menos margen a los lados, para que mida lo más posible. */
 @media (max-width: 720px) {
-  .shot__frame { aspect-ratio: 1 / 1.05; }
-  .shot__frame img { height: 100%; object-fit: cover; object-position: 0 0; }
+  .hero { min-height: 0; padding-bottom: 2.2rem; }
+  .shot { padding: 0 .75rem 1.5rem; }
+  .shot__frame { border-radius: 10px; }
 }
 
 /* ── El porqué ── Una frase corta y su respuesta, en un bloque de color y nada más. */
-.why { padding: clamp(3rem, 10vh, 6rem) 0 clamp(5rem, 16vh, 9rem); background: var(--rose); border-radius: 0 0 clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px); }
+.why { padding: clamp(3rem, 10vh, 6rem) 0 clamp(5rem, 16vh, 9rem); background: var(--lilac); border-radius: 0 0 clamp(28px, 5vw, 64px) clamp(28px, 5vw, 64px); }
 .why__in { display: grid; justify-items: center; text-align: center; }
 .why__t { max-width: 15em; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: clamp(2.1rem, 4.8vw, 4.4rem); line-height: 1.06; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink-strong, var(--ink)); text-wrap: balance; }
 .why .hl::before { background: var(--lemon); }
