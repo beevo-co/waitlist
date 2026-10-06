@@ -606,7 +606,7 @@ a.chip--mint:hover { background: #b4f7c3; }
    menos margen a los lados, para que mida lo más posible. */
 @media (max-width: 720px) {
   .hero { min-height: 0; padding-bottom: 2.2rem; }
-  .shot { padding: 0 .75rem 1.5rem; }
+  .shot { padding: 0 .75rem 1rem; }
   .shot__frame { border-radius: 10px; }
 }
 
@@ -616,6 +616,8 @@ a.chip--mint:hover { background: #b4f7c3; }
 .why__t { max-width: 15em; font-family: var(--display); font-weight: 500; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 0; font-size: clamp(2.1rem, 4.8vw, 4.4rem); line-height: 1.06; letter-spacing: -.03em; word-spacing: .06em; color: var(--ink-strong, var(--ink)); text-wrap: balance; }
 .why .hl::before { background: var(--lemon); }
 .why__punch { margin-top: clamp(1.4rem, 4vh, 2.6rem); }
+/* En un teléfono la frase va pegada a la captura: con el aire de escritorio, el bloque lila se veía vacío. */
+@media (max-width: 720px) { .why { padding: 1.5rem 0 3.5rem; } }
 .why__src { margin-top: clamp(1.6rem, 4vh, 2.4rem); font-size: .8rem; color: var(--soft); }
 .why__src a { text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: .2em; transition: text-decoration-color .2s ease; }
 .why__src a:hover { text-decoration-color: var(--ink); }

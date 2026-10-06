@@ -1124,7 +1124,9 @@
       gsap.set(words, { yPercent: 112 })
       if (hl) gsap.set(hl, { "--hl": 0 })
       ScrollTrigger.create({
-        trigger: h, start: "top 86%", once: true,
+        // La frase del porqué va pegada a la captura: si esperara a entrar del todo, el bloque lila
+        // se vería vacío debajo de ella.
+        trigger: h, start: h.closest(".why") ? "top bottom" : "top 86%", once: true,
         onEnter: () => {
           gsap.to(words, { yPercent: 0, duration: 1.1, stagger: .055, ease: "expo.out" })
           if (hl) gsap.to(hl, { "--hl": 1, duration: .9, delay: .25 + words.length * .055, ease: "power3.inOut" })
