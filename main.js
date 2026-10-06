@@ -1207,9 +1207,10 @@
 
   function intro() {
     document.body.classList.remove("is-loading")
-    if (!reduced) wrapWords($("[data-hero-title]"))
-    const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: reduced ? 0 : .35 })
-    if (reduced) return
+    // En un teléfono el titular ya está puesto desde el primer pintado (`.fast`): no se anima.
+    if (reduced || root.classList.contains("fast")) return
+    wrapWords($(`.hero__v[data-v~="${root.dataset.hero || "a"}"] [data-hero-title]`) || $("[data-hero-title]"))
+    const tl = gsap.timeline({ defaults: { ease: "expo.out" }, delay: .35 })
     // La cortina tarda un segundo en subir: lo de la portada nace detrás de ella, como en la lista.
     tl.from(".hero__title .wd > span", { yPercent: 112, duration: 1.3, stagger: .05 }, .45)
       .from(".hero__title [data-swap]", { y: 30, autoAlpha: 0, duration: 1.2 }, .6)

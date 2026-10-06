@@ -15,6 +15,10 @@
     : /^(localhost|127\.0\.0\.1)$/.test(host) ? "http://localhost:3000/embudo"
       : null // una vista previa de Vercel no cuenta
   if (!ENDPOINT || !navigator.sendBeacon) return
+  // Quien fuerza un hero (`?hero=b`) lo está mirando, no visitando: no cuenta.
+  const root = document.documentElement
+  if ("heroForced" in root.dataset) return
+  const variant = root.dataset.hero || null
 
   const query = new URLSearchParams(location.search)
   const utm = {
@@ -27,7 +31,7 @@
 
   function flush() {
     if (!queue.length) return
-    const body = JSON.stringify({ events: queue.splice(0), path: location.pathname, ref: document.referrer, utm })
+    const body = JSON.stringify({ events: queue.splice(0), path: location.pathname, ref: document.referrer, utm, variant })
     try { navigator.sendBeacon(ENDPOINT, new Blob([body], { type: "text/plain" })) } catch { /* se calla */ }
   }
 
@@ -80,6 +84,7 @@
       event = { target: "signup", label: where(el), plan: plan.get("plan"), interval: plan.get("interval") }
     } else if (href.includes("/acceder")) event = { target: "login", label: where(el) }
     else if (href === "#precios") event = { target: "pricing", label: where(el) }
+    else if (href === "#producto") event = { target: "demo", label: where(el) }
     else if (href.includes("/soporte")) event = { target: "support", label: where(el) }
     else if (el.matches("[data-interval]")) event = { target: "interval", label: el.dataset.interval }
     else if (el.matches("[data-notch-toggle]")) event = { target: "nav", label: "notch" }

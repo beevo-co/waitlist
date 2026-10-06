@@ -14,8 +14,19 @@
 <link rel="alternate" hreflang="es" href="https://beevo.co/?lang=es">
 <link rel="alternate" hreflang="en" href="https://beevo.co/?lang=en">
 <link rel="alternate" hreflang="x-default" href="https://beevo.co/">
-<link rel="preload" href="assets/fonts/NeulisAlt-Light.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="assets/fonts/Fraunces.ttf" as="font" type="font/ttf" crossorigin>
+<!-- Antes de pintar nada: qué hero le toca a esta visita (A/B, sin guardar nada: al azar en cada
+     carga; `?hero=b` lo fuerza para mirarlo y entonces no se cuenta) y si es un teléfono, que entra
+     sin cortina y con el titular ya puesto — llegan de Instagram y se iban en un segundo. -->
+<script>
+  (function () {
+    var root = document.documentElement, asked = new URLSearchParams(location.search).get("hero")
+    root.dataset.hero = /^[abd]$/.test(asked || "") ? asked : "abd".charAt(Math.floor(Math.random() * 3))
+    if (asked) root.dataset.heroForced = ""
+    if (matchMedia("(pointer: coarse)").matches) root.classList.add("fast")
+  })()
+</script>
+<link rel="preload" href="assets/fonts/NeulisAlt-Light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/Fraunces.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/vendor/lenis.css">
 <link rel="stylesheet" href="styles.css">
 <!-- Vercel Web Analytics: cuenta visitas y páginas vistas, sin cookies. -->
@@ -50,6 +61,7 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol>
     <symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
@@ -120,16 +132,37 @@
   <section class="hero" data-hero>
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__in">
-      <h1 class="display hero__title" data-hero-title>
-        <span class="line"><span data-i18n="hero.l1">El CRM para</span> <br class="br-phone"><span class="hl swap" data-swap>freelancers</span></span>
-        <span class="line line--wink"><span data-i18n="hero.l2">que odian los CRM</span>.</span>
-      </h1>
-      <p class="lede" data-hero-in data-i18n="hero.lead">Beevo es el espacio donde organizas todo lo que mueve tu trabajo creativo y profesional: tus clientes, proyectos, tareas y cuentas de cobro.</p>
-      <div class="hero__cta" data-hero-in>
-        <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="hero.cta">Empieza gratis</span><i data-arw></i></a>
-        <a class="btn btn--line btn--lg" href="#precios"><span data-i18n="hero.prices">Ver precios</span><i data-arw></i></a>
+      <!-- Tres heros en prueba (A/B): el del `data-hero` de la raíz se ve y los otros no existen.
+           Sin JavaScript, el A. Lo que cuenta cada uno se mira en el admin, en «Landing». -->
+      <div class="hero__v" data-v="a">
+        <h1 class="display hero__title" data-hero-title>
+          <span class="line"><span data-i18n="hero.l1">El CRM para</span> <br class="br-phone"><span class="hl swap" data-swap>freelancers</span></span>
+          <span class="line line--wink"><span data-i18n="hero.l2">que odian los CRM</span>.</span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.lead">Beevo es el espacio donde organizas todo lo que mueve tu trabajo creativo y profesional: tus clientes, proyectos, tareas y cuentas de cobro.</p>
       </div>
-      <p class="hero__note" data-hero-in data-i18n="hero.note">7 días gratis · Cancelas cuando quieras</p>
+      <div class="hero__v" data-v="b">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.trial">7 días gratis</span><span class="chip" data-i18n="hero.chip.cancel">Cancela cuando quieras</span><span class="chip" data-i18n="hero.chip.ai">Con IA</span></p>
+        <h1 class="display hero__title" data-hero-title>
+          <span class="line" data-i18n="hero.b.l1">Menos papeleo.</span>
+          <span class="line line--wink"><span class="hl" data-i18n="hero.b.l2">Más trabajo creativo</span>.</span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.b.lead">Clientes, proyectos, tareas y cuentas de cobro en un solo lugar. Tú creas; Beevo lleva lo demás.</p>
+      </div>
+      <div class="hero__v" data-v="d">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.trial">7 días gratis</span><span class="chip" data-i18n="hero.chip.creatives">Hecho para creativos</span></p>
+        <h1 class="display hero__title hero__title--long" data-hero-title>
+          <span class="line" data-i18n="hero.d.l1">Tu estudio merece algo mejor que</span>
+          <span class="line line--wink"><span class="hl" data-i18n="hero.d.l2">un Excel y veinte chats</span>.</span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.d.lead">Proyectos, clientes y cobros en un solo sitio. Hecho por creativos, para creativos.</p>
+      </div>
+      <div class="hero__cta" data-hero-in>
+        <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="hero.cta">Pruébalo gratis</span><i data-arw></i></a>
+        <a class="btn btn--line btn--lg" href="#producto"><span data-i18n="hero.demo">Míralo funcionar</span><svg class="i hero__down" aria-hidden="true"><use href="#i-down"/></svg></a>
+      </div>
+      <p class="hero__note hero__v" data-v="a" data-hero-in data-i18n="hero.note">7 días gratis · Cancelas cuando quieras</p>
+      <p class="hero__note hero__v" data-v="b d" data-hero-in data-i18n="hero.card">Te pedimos la tarjeta, pero no te cobramos nada hasta el día 8.</p>
     </div>
   </section>
 

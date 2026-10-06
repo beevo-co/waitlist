@@ -9,8 +9,8 @@
    de gancho y una Fraunces de peso medio, y se leían pesadas y raras.
    ─────────────────────────────────────────────────────────── */
 
-@font-face { font-family: "Neulis"; src: url("assets/fonts/NeulisAlt-Light.otf") format("opentype"); font-weight: 300; font-display: swap; }
-@font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces.ttf") format("truetype"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Neulis"; src: url("assets/fonts/NeulisAlt-Light.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 
 @property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
@@ -567,6 +567,18 @@ a.chip--mint:hover { background: #b4f7c3; }
 .lede { max-width: 36rem; margin-top: clamp(1rem, 2.4vh, 1.5rem); font-size: clamp(1rem, 1.3vw, 1.2rem); line-height: 1.45; }
 .hero__cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; margin-top: clamp(1.4rem, 3vh, 2rem); }
 .hero__note { margin-top: .9rem; font-size: .86rem; color: var(--soft); }
+/* Los heros en prueba: se ve el de la visita (`data-hero` en la raíz) y, sin JavaScript, el A. */
+.hero__v { display: contents; }
+.hero__v:not([data-v~="a"]),
+[data-hero="b"] .hero__v:not([data-v~="b"]),
+[data-hero="d"] .hero__v:not([data-v~="d"]) { display: none; }
+[data-hero="b"] .hero__v[data-v~="b"], [data-hero="d"] .hero__v[data-v~="d"] { display: contents; }
+[data-hero="b"] p.hero__v[data-v~="b"], [data-hero="d"] p.hero__v[data-v~="d"] { display: block; }
+.hero__title--long { font-size: clamp(2.2rem, 4.3vw, 4.5rem); }
+.hero__chips { justify-content: center; margin-bottom: clamp(1rem, 2.4vh, 1.5rem); font-size: clamp(.95rem, 1.1vw, 1.1rem); }
+.hero__chips .chip { background: color-mix(in srgb, #fff 58%, transparent); }
+.hero__down { width: .95em; height: .95em; margin-left: .3em; transition: translate .3s var(--ease); }
+.btn:hover .hero__down { translate: 0 2px; }
 
 /* ── El porqué ── Una frase grande, sin tarjetas ni dibujos. Sus palabras nacen apagadas y se llenan
    de tinta al ritmo del scroll (`setupFill`); sin JavaScript, o con «menos movimiento», se lee entera. */
@@ -1044,6 +1056,10 @@ a.chip--mint:hover { background: #b4f7c3; }
 /* ── Entrada ──
    Lo de arriba nace escondido y lo levanta main.js; sin JavaScript se ve todo. */
 .js .is-loading [data-hero-in], .js .is-loading .hero__title { opacity: 0; }
+/* En un teléfono no hay cortina ni entrada: el titular está desde el primer pintado. Llegan desde
+   Instagram, en su navegador, y la mitad se iba antes de que la cortina subiera. */
+.fast .curtain { display: none !important; }
+.js.fast .is-loading [data-hero-in], .js.fast .is-loading .hero__title { opacity: 1; }
 .js [data-reveal] { opacity: 0; translate: 0 1.4rem; }
 .js [data-reveal].is-in { opacity: 1; translate: 0 0; transition: opacity .9s var(--ease), translate 1.1s var(--ease); transition-delay: var(--delay, 0s); }
 
