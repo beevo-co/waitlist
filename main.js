@@ -942,13 +942,30 @@
     }
     const asked = fetch(CURRENCY_URL, { credentials: "omit" })
       .then(r => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then(({ currency } = {}) => {
+      .then(({ currency, trial } = {}) => {
+        if (trial === "cardless") promiseCardless()
         const c = String(currency || "").toLowerCase()
         return ["usd", "eur", "cop"].includes(c) ? c : Promise.reject(c)
       })
     const late = new Promise(resolve => setTimeout(() => resolve(guess()), 2000))
     return Promise.race([asked, late]).catch(guess)
   }
+  /* El A/B de la prueba (`Billing::Trial` en la app): a quien le toca entrar sin tarjeta se le
+     promete eso, y lo que se promete es lo que pasa al registrarse. Lo dice la misma respuesta que
+     la moneda; si no llega, se queda lo de siempre. Cambia el texto y la clave de cada nodo, para
+     que el idioma lo vuelva a poner bien si se aplica después. */
+  function promiseCardless() {
+    for (const key of ["hero.note", "faq.a2", "pr.foot"]) {
+      const cardless = `${key}.cardless`
+      I18N.en[cardless] = I18N.words.en[cardless]
+      $$(`[data-i18n="${key}"]`).forEach(node => {
+        original.set(node, I18N.words.es[cardless])
+        node.dataset.i18n = cardless
+        node.innerHTML = t(cardless)
+      })
+    }
+  }
+
   const pricing = { interval: "month", currency: null }
   const amount = (plan, interval, cur) => {
     const def = PRICES[plan]
