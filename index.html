@@ -20,7 +20,7 @@
 <script>
   (function () {
     var root = document.documentElement, asked = new URLSearchParams(location.search).get("hero")
-    root.dataset.hero = /^[abde]$/.test(asked || "") ? asked : "abde".charAt(Math.floor(Math.random() * 4))
+    root.dataset.hero = /^[abdefgh]$/.test(asked || "") ? asked : "efgh".charAt(Math.floor(Math.random() * 4))
     if (asked) root.dataset.heroForced = ""
     if (matchMedia("(pointer: coarse)").matches) root.classList.add("fast")
   })()
@@ -132,7 +132,7 @@
   <section class="hero" data-hero>
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__in">
-      <!-- Tres heros en prueba (A/B): el del `data-hero` de la raíz se ve y los otros no existen.
+      <!-- Los heros en prueba (A/B): el del `data-hero` de la raíz se ve y los otros no existen.
            Sin JavaScript, el A. Lo que cuenta cada uno se mira en el admin, en «Landing». -->
       <div class="hero__v" data-v="a">
         <h1 class="display hero__title" data-hero-title>
@@ -167,11 +167,39 @@
         </h1>
         <p class="lede" data-hero-in data-i18n="hero.e.lead">Beevo la prepara sola cuando toca, con tus proyectos y tus tarifas. Tú la revisas y la mandas en un clic.</p>
       </div>
+      <!-- F, G y H: como la E —que fue la que más bajó y más registró—, un dolor concreto y lo que hace
+           Beevo con él, pero cada uno el de otra parte del producto: la entrega que se pasa (tareas),
+           el proyecto perdido en los chats (proyectos) y pasar de lo que pide el cliente a un plan
+           (Beevo AI). Así se mide qué dolor engancha, no solo cómo se dice. -->
+      <div class="hero__v" data-v="f">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.who">Para freelancers y agencias</span></p>
+        <h1 class="display hero__title hero__title--long" data-hero-title>
+          <span class="line" data-i18n="hero.f.l1">Que no se te vuelva</span>
+          <span class="line line--wink"><span data-i18n="hero.f.l2">a pasar</span> <span class="hl" data-i18n="hero.f.l3">una entrega</span><span data-i18n="hero.f.l4">.</span></span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.f.lead">Cada tarea con su fecha y quién la lleva, en un tablero que se lee de un vistazo. Beevo te avisa antes de que venza.</p>
+      </div>
+      <div class="hero__v" data-v="g">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.who">Para freelancers y agencias</span></p>
+        <h1 class="display hero__title" data-hero-title>
+          <span class="line" data-i18n="hero.g.l1">Cada proyecto,</span>
+          <span class="line line--wink"><span class="hl" data-i18n="hero.g.l3">fuera de los chats</span><span data-i18n="hero.g.l4">.</span></span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.g.lead">Tareas, archivos, comentarios y lo que pidió el cliente, juntos en su proyecto. Sin buscar en WhatsApp.</p>
+      </div>
+      <div class="hero__v" data-v="h">
+        <p class="chips hero__chips" data-hero-in><span class="chip" data-i18n="hero.chip.who">Para freelancers y agencias</span></p>
+        <h1 class="display hero__title hero__title--long" data-hero-title>
+          <span class="line" data-i18n="hero.h.l1">Del documento del cliente</span>
+          <span class="line line--wink"><span data-i18n="hero.h.l2">a un</span> <span class="hl" data-i18n="hero.h.l3">plan de trabajo</span><span data-i18n="hero.h.l4">.</span></span>
+        </h1>
+        <p class="lede" data-hero-in data-i18n="hero.h.lead">Se lo pasas a Beevo AI y lo convierte en tareas, con fechas y responsables. Tú solo lo apruebas.</p>
+      </div>
       <div class="hero__cta" data-hero-in>
         <a class="btn btn--ink btn--lg" data-plan-link data-plan="solo" href="https://app.beevo.co/registro?plan=solo&amp;interval=month"><span data-i18n="hero.cta">Pruébalo gratis</span><i data-arw></i></a>
         <a class="btn btn--line btn--lg" href="#producto"><span data-i18n="hero.demo">Míralo funcionar</span><svg class="i hero__down" aria-hidden="true"><use href="#i-down"/></svg></a>
       </div>
-      <p class="hero__note hero__v" data-v="a" data-hero-in data-i18n="hero.note">14 días gratis · Cancelas cuando quieras</p>
+      <p class="hero__note hero__v" data-v="a" data-hero-in data-i18n="hero.note">14 días gratis · Sin tarjeta</p>
     </div>
   </section>
 
@@ -401,7 +429,7 @@
           </ul>
         </article>
       </div>
-      <p class="prices__foot" data-reveal data-i18n="pr.foot">Pagos seguros con Stripe. Te pedimos la tarjeta al empezar, pero no te cobramos nada durante los 14 días de prueba.</p>
+      <p class="prices__foot" data-reveal data-i18n="pr.foot">Pagos seguros con Stripe. Los 14 días de prueba van sin tarjeta: la pones solo si decides quedarte.</p>
     </div>
   </section>
 
@@ -414,7 +442,7 @@
       </div>
       <div class="faq__list" data-faq>
         <details data-reveal><summary><span data-i18n="faq.q1">¿Qué es Beevo?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a1">Un CRM para freelancers y agencias: clientes, proyectos, tareas, calendario, pizarras, cuentas de cobro y contabilidad en un solo lugar, con un project manager con IA que se encarga de la gestión.</p></div></details>
-        <details data-reveal><summary><span data-i18n="faq.q2">¿Me cobran apenas me registro?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a2">No. Te pedimos la tarjeta al empezar, pero no te cobramos nada durante 14 días. Si cancelas antes, no pagas.</p></div></details>
+        <details data-reveal><summary><span data-i18n="faq.q2">¿Me cobran apenas me registro?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a2">No. Pruebas Beevo 14 días sin poner tarjeta. Cuando terminen, eliges plan si te sirvió.</p></div></details>
         <details data-reveal><summary><span data-i18n="faq.q3">¿Puedo usar Beevo sin la IA?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a3">Sí. Todo lo demás —clientes, proyectos, tareas, calendario y cobros— funciona sin ella. Beevo AI está arriba de la pantalla para cuando lo quieras usar.</p></div></details>
         <details data-reveal><summary><span data-i18n="faq.q4">¿Puede crear cosas sin preguntarme?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-i18n="faq.a4">Lo que le pides directo, lo hace. Lo demás —un plan sacado de un PDF, una cuenta de cobro— te lo propone para que lo apruebes. Y si algo no te gusta, lo deshaces con un clic.</p></div></details>
         <details data-reveal><summary><span data-i18n="faq.q5">¿Está en el celular?</span><i class="faq__pm"></i></summary><div class="faq__a"><p data-apps-answer data-i18n="faq.a5">Beevo funciona en el navegador de tu celular, y las apps para iPhone y Android llegan muy pronto.</p></div></details>
